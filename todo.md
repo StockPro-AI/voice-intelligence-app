@@ -129,3 +129,18 @@ External Services
 - [x] i18n für Export-Texte
 - [x] Metadaten in Export (Datum, Sprache, Modus)
 - [x] Dateiname-Generierung mit Zeitstempel
+
+
+## Phase 12: Recording-History & Verlaufsliste
+- [x] Datenbankschema für Recording-History erweitern
+- [x] Backend-Procedures für History-Verwaltung (Create, Read, Update, Delete)
+- [ ] History-Speicherung nach jeder Aufnahme
+- [x] History-UI-Komponente mit Tabelle/Liste
+- [x] Suchfunktion für Transkripte
+- [x] Filter nach Datum, Sprache, Enrichment-Modus
+- [x] Favoriten-Markierung für Aufnahmen
+- [x] Löschen einzelner oder mehrerer Einträge
+- [x] Export von History-Einträgen
+- [x] i18n für History-Texte
+- [ ] Pagination für große History-Listen
+- [x] Unit-Tests für History-Router

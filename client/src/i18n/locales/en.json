@@ -117,5 +117,17 @@
     "ru": "Русский",
     "ja": "日本語",
     "zh": "中文"
+  },
+  "history": {
+    "title": "History",
+    "back": "Back",
+    "empty": "No recordings found. Start a new recording to see entries here.",
+    "searchPlaceholder": "Search transcripts...",
+    "confirmDelete": "Are you sure you want to delete this recording?",
+    "messages": {
+      "deleted": "Recording deleted",
+      "favoriteUpdated": "Favorite updated",
+      "exported": "Exported"
+    }
   }
 }

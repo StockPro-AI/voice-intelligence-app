@@ -58,4 +58,22 @@ export const userSettings = mysqlTable("user_settings", {
 export type UserSettings = typeof userSettings.$inferSelect;
 export type InsertUserSettings = typeof userSettings.$inferInsert;
 
-// TODO: Add your tables here
+// Recording history for tracking all voice recordings and their enrichments
+export const recordingHistory = mysqlTable("recording_history", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  audioUrl: varchar("audioUrl", { length: 512 }).notNull(),
+  transcription: text("transcription").notNull(),
+  enrichedResult: text("enrichedResult"),
+  enrichmentMode: mysqlEnum("enrichmentMode", ["summary", "structure", "format", "context"]),
+  transcriptionLanguage: varchar("transcriptionLanguage", { length: 10 }).notNull(),
+  duration: int("duration"),
+  isFavorite: boolean("isFavorite").default(false).notNull(),
+  title: varchar("title", { length: 255 }),
+  notes: text("notes"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type RecordingHistory = typeof recordingHistory.$inferSelect;
+export type InsertRecordingHistory = typeof recordingHistory.$inferInsert;

@@ -1,6 +1,6 @@
-import { eq } from "drizzle-orm";
+import { eq, desc, and } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, InsertUserSettings, users, userSettings } from "../drizzle/schema";
+import { InsertUser, InsertUserSettings, InsertRecordingHistory, users, userSettings, recordingHistory } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -147,4 +147,112 @@ export async function updateUserSettings(
   }
 }
 
-// TODO: add feature queries here as your schema grows.
+// Recording History Functions
+export async function createRecordingHistory(
+  userId: number,
+  data: Omit<InsertRecordingHistory, 'userId'>
+) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot create recording: database not available");
+    return undefined;
+  }
+
+  try {
+    const result = await db.insert(recordingHistory).values({
+      ...data,
+      userId,
+    });
+    return result;
+  } catch (error) {
+    console.error("[Database] Failed to create recording:", error);
+    throw error;
+  }
+}
+
+export async function getRecordingHistory(userId: number, limit = 50, offset = 0) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get recordings: database not available");
+    return [];
+  }
+
+  try {
+    const results = await db
+      .select()
+      .from(recordingHistory)
+      .where(eq(recordingHistory.userId, userId))
+      .orderBy(desc(recordingHistory.createdAt))
+      .limit(limit)
+      .offset(offset);
+    return results;
+  } catch (error) {
+    console.error("[Database] Failed to get recordings:", error);
+    return [];
+  }
+}
+
+export async function getRecordingById(id: number, userId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get recording: database not available");
+    return undefined;
+  }
+
+  try {
+    const result = await db
+      .select()
+      .from(recordingHistory)
+      .where(and(eq(recordingHistory.id, id), eq(recordingHistory.userId, userId)))
+      .limit(1);
+    return result.length > 0 ? result[0] : undefined;
+  } catch (error) {
+    console.error("[Database] Failed to get recording:", error);
+    return undefined;
+  }
+}
+
+export async function updateRecording(
+  id: number,
+  userId: number,
+  data: Partial<InsertRecordingHistory>
+) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot update recording: database not available");
+    return undefined;
+  }
+
+  try {
+    await db
+      .update(recordingHistory)
+      .set(data)
+      .where(and(eq(recordingHistory.id, id), eq(recordingHistory.userId, userId)));
+    return await getRecordingById(id, userId);
+  } catch (error) {
+    console.error("[Database] Failed to update recording:", error);
+    throw error;
+  }
+}
+
+export async function deleteRecording(id: number, userId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot delete recording: database not available");
+    return false;
+  }
+
+  try {
+    await db
+      .delete(recordingHistory)
+      .where(and(eq(recordingHistory.id, id), eq(recordingHistory.userId, userId)));
+    return true;
+  } catch (error) {
+    console.error("[Database] Failed to delete recording:", error);
+    return false;
+  }
+}
+
+export async function toggleFavorite(id: number, userId: number, isFavorite: boolean) {
+  return updateRecording(id, userId, { isFavorite });
+}

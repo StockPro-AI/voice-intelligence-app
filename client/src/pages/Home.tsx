@@ -4,7 +4,7 @@ import { useAuth } from '@/_core/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { getLoginUrl } from '@/const';
 import { useLocation } from 'wouter';
-import { Mic, Settings } from 'lucide-react';
+import { Mic, Settings, Clock } from 'lucide-react';
 import { useTranslation } from 'react-i18next';
 import { ThemeSwitcher } from '@/components/ThemeSwitcher';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
@@ -52,6 +52,14 @@ export default function Home() {
                     {user?.role === 'admin' ? 'Admin' : 'User'}
                   </p>
                 </div>
+                <Button
+                  onClick={() => setLocation('/history')}
+                  variant="ghost"
+                  size="sm"
+                  className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                >
+                  <Clock className="w-4 h-4" />
+                </Button>
                 <Button
                   onClick={() => setLocation('/settings')}
                   variant="ghost"
