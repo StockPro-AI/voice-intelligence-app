@@ -45,19 +45,26 @@
     "structure": "Structure",
     "format": "Format",
     "context": "Context",
+    "export": "Export",
+    "copyResult": "Copy Result",
+    "copyFull": "Copy Full",
+    "download": "Download",
+    "exportOptions": "Export Options",
     "errors": {
       "recordingFailed": "Failed to start recording",
       "transcriptionFailed": "Transcription failed",
       "enrichmentFailed": "Enrichment failed",
       "uploadFailed": "Upload failed",
       "noTranscription": "No transcription to enrich",
-      "nothingToCopy": "Nothing to copy"
+      "nothingToCopy": "Nothing to copy",
+      "exportFailed": "Export failed"
     },
     "messages": {
       "recordingStarted": "Recording started",
       "transcriptionComplete": "Transcription complete",
       "enrichmentComplete": "Enrichment complete",
-      "copiedToClipboard": "Copied to clipboard"
+      "copiedToClipboard": "Copied to clipboard",
+      "downloadStarted": "Download started"
     }
   },
   "settings": {

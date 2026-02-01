@@ -5,6 +5,8 @@ import { Card } from '@/components/ui/card';
 import { Loader2, Mic, Square, Copy, Download } from 'lucide-react';
 import { trpc } from '@/lib/trpc';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
+import { ExportPanel } from './ExportPanel';
 
 interface VoiceRecorderProps {
   onTranscriptionComplete?: (text: string) => void;
@@ -13,6 +15,7 @@ interface VoiceRecorderProps {
 export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
   const { isRecording, duration, startRecording, stopRecording, cancelRecording, error } =
     useAudioRecorder();
+  const { t } = useTranslation();
 
   const [transcription, setTranscription] = useState<string>('');
   const [enrichedText, setEnrichedText] = useState<string>('');
@@ -21,10 +24,20 @@ export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
   const [selectedMode, setSelectedMode] = useState<'summary' | 'structure' | 'format' | 'context'>(
     'summary'
   );
+  const [showExportPanel, setShowExportPanel] = useState(false);
+  const [transcriptionLanguage, setTranscriptionLanguage] = useState('en');
 
   const uploadAudioMutation = trpc.transcription.uploadAudio.useMutation();
   const transcribeMutation = trpc.transcription.transcribeAudio.useMutation();
   const enrichMutation = trpc.transcription.enrichTranscription.useMutation();
+  const { data: settingsData } = trpc.settings.getSettings.useQuery();
+
+  // Update language from settings
+  React.useEffect(() => {
+    if (settingsData?.settings?.transcriptionLanguage) {
+      setTranscriptionLanguage(settingsData.settings.transcriptionLanguage);
+    }
+  }, [settingsData]);
 
   const formatDuration = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
@@ -35,9 +48,9 @@ export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
   const handleStartRecording = async () => {
     try {
       await startRecording();
-      toast.success('Recording started');
+      toast.success(t('recorder.messages.recordingStarted'));
     } catch (err) {
-      toast.error('Failed to start recording');
+      toast.error(t('recorder.errors.recordingFailed'));
     }
   };
 
@@ -47,7 +60,7 @@ export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
       const audioBlob = await stopRecording();
 
       if (!audioBlob) {
-        toast.error('No audio recorded');
+        toast.error(t('recorder.errors.recordingFailed'));
         return;
       }
 
@@ -73,12 +86,12 @@ export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
         
         setTranscription(transcribedText);
         onTranscriptionComplete?.(transcriptionResult.text);
-        toast.success('Transcription complete');
+        toast.success(t('recorder.messages.transcriptionComplete'));
       };
 
       reader.readAsDataURL(audioBlob);
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Transcription failed';
+      const message = err instanceof Error ? err.message : t('recorder.errors.transcriptionFailed');
       toast.error(message);
     } finally {
       setIsTranscribing(false);
@@ -87,7 +100,7 @@ export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
 
   const handleEnrich = async () => {
     if (!transcription) {
-      toast.error('No transcription to enrich');
+      toast.error(t('recorder.errors.noTranscription'));
       return;
     }
 
@@ -97,15 +110,15 @@ export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
         text: transcription,
         mode: selectedMode,
       });
-
-        const enrichedContent = typeof result.enrichedText === 'string'
-          ? result.enrichedText
-          : JSON.stringify(result.enrichedText);
-        
-        setEnrichedText(enrichedContent);
-      toast.success(`Enrichment complete (${selectedMode})`);
+      
+      const enrichedContent = typeof result.enrichedText === 'string'
+        ? result.enrichedText
+        : JSON.stringify(result.enrichedText);
+      
+      setEnrichedText(enrichedContent);
+      toast.success(t('recorder.messages.enrichmentComplete'));
     } catch (err) {
-      const message = err instanceof Error ? err.message : 'Enrichment failed';
+      const message = err instanceof Error ? err.message : t('recorder.errors.enrichmentFailed');
       toast.error(message);
     } finally {
       setIsEnriching(false);
@@ -115,15 +128,15 @@ export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
   const handleCopyToClipboard = async () => {
     const textToCopy = enrichedText || transcription;
     if (!textToCopy) {
-      toast.error('Nothing to copy');
+      toast.error(t('recorder.errors.nothingToCopy'));
       return;
     }
 
     try {
       await navigator.clipboard.writeText(textToCopy);
-      toast.success('Copied to clipboard');
+      toast.success(t('recorder.messages.copiedToClipboard'));
     } catch {
-      toast.error('Failed to copy');
+      toast.error(t('common.error'));
     }
   };
 
@@ -152,7 +165,7 @@ export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
               {formatDuration(duration)}
             </p>
             <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
-              {isRecording ? 'Recording...' : 'Ready to record'}
+              {isRecording ? t('recorder.recording') : t('recorder.readyToRecord')}
             </p>
           </div>
 
@@ -168,7 +181,7 @@ export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
                 className="px-8 py-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-lg font-semibold transition-all"
               >
                 <Mic className="w-4 h-4 mr-2" />
-                Start Recording
+                {t('recorder.startRecording')}
               </Button>
             ) : (
               <>
@@ -178,14 +191,14 @@ export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
                   className="px-8 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold transition-all"
                 >
                   <Square className="w-4 h-4 mr-2" />
-                  Stop
+                  {t('recorder.stop')}
                 </Button>
                 <Button
                   onClick={cancelRecording}
                   variant="outline"
                   className="px-8 py-2"
                 >
-                  Cancel
+                  {t('recorder.cancel')}
                 </Button>
               </>
             )}
@@ -194,7 +207,7 @@ export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
           {isTranscribing && (
             <div className="flex items-center gap-2 text-sm text-slate-600 dark:text-slate-400">
               <Loader2 className="w-4 h-4 animate-spin" />
-              Transcribing...
+              {t('recorder.recording')}
             </div>
           )}
         </div>
@@ -204,7 +217,7 @@ export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
       {transcription && (
         <Card className="p-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
           <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
-            Transcription
+            {t('recorder.transcription')}
           </h3>
           <p className="text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">
             {transcription}
@@ -216,7 +229,7 @@ export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
       {transcription && (
         <Card className="p-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
           <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-4">
-            Enrichment Options
+            {t('recorder.enrichmentOptions')}
           </h3>
 
           <div className="space-y-4">
@@ -232,7 +245,7 @@ export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
                       : 'bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-600'
                   }`}
                 >
-                  {mode.charAt(0).toUpperCase() + mode.slice(1)}
+                  {t(`recorder.${mode}`)}
                 </button>
               ))}
             </div>
@@ -246,36 +259,62 @@ export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
               {isEnriching ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Enriching...
+                  {t('recorder.enriching')}
                 </>
               ) : (
-                'Enrich Transcription'
+                t('recorder.enrichTranscription')
               )}
             </Button>
           </div>
         </Card>
       )}
 
-      {/* Enriched Result Display */}
+      {/* Enriched Result Display with Export */}
       {enrichedText && (
-        <Card className="p-6 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 border border-emerald-200 dark:border-emerald-800">
-          <div className="flex justify-between items-start mb-4">
-            <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
-              Enriched Result
-            </h3>
-            <Button
-              onClick={handleCopyToClipboard}
-              variant="ghost"
-              size="sm"
-              className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
-            >
-              <Copy className="w-4 h-4" />
-            </Button>
-          </div>
-          <p className="text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">
-            {enrichedText}
-          </p>
-        </Card>
+        <>
+          <Card className="p-6 bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 border border-emerald-200 dark:border-emerald-800">
+            <div className="flex justify-between items-start mb-4">
+              <h3 className="text-lg font-semibold text-slate-900 dark:text-white">
+                {t('recorder.enrichedResult')}
+              </h3>
+              <div className="flex gap-2">
+                <Button
+                  onClick={handleCopyToClipboard}
+                  variant="ghost"
+                  size="sm"
+                  className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  title={t('common.save')}
+                >
+                  <Copy className="w-4 h-4" />
+                </Button>
+                <Button
+                  onClick={() => setShowExportPanel(!showExportPanel)}
+                  variant="ghost"
+                  size="sm"
+                  className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                  title="Export options"
+                >
+                  <Download className="w-4 h-4" />
+                </Button>
+              </div>
+            </div>
+            <p className="text-slate-700 dark:text-slate-300 leading-relaxed whitespace-pre-wrap">
+              {enrichedText}
+            </p>
+          </Card>
+
+          {/* Export Panel */}
+          {showExportPanel && (
+            <ExportPanel
+              transcription={transcription}
+              enrichedResult={enrichedText}
+              language={transcriptionLanguage}
+              enrichmentMode={selectedMode}
+              duration={duration}
+              onClose={() => setShowExportPanel(false)}
+            />
+          )}
+        </>
       )}
     </div>
   );

@@ -118,3 +118,14 @@ External Services
 - [x] Persistierung von Theme und Sprache
 - [x] Dark Mode als Standard
 - [x] Deutsch als Standard-Sprache
+
+
+## Phase 11: Export-Funktionen für Notizen
+- [x] Export-Utility Funktionen (Markdown, Clipboard)
+- [x] Export-Komponente mit eleganter UI
+- [x] Zwischenablage-Kopieren mit Toast-Feedback
+- [x] Markdown-Download-Funktionalität
+- [x] Export-Buttons in VoiceRecorder integrieren
+- [x] i18n für Export-Texte
+- [x] Metadaten in Export (Datum, Sprache, Modus)
+- [x] Dateiname-Generierung mit Zeitstempel

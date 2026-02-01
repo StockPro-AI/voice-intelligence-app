@@ -45,19 +45,26 @@
     "structure": "Struktur",
     "format": "Format",
     "context": "Kontext",
+    "export": "Exportieren",
+    "copyResult": "Ergebnis kopieren",
+    "copyFull": "Alles kopieren",
+    "download": "Herunterladen",
+    "exportOptions": "Exportoptionen",
     "errors": {
       "recordingFailed": "Aufnahme fehlgeschlagen",
       "transcriptionFailed": "Transkription fehlgeschlagen",
       "enrichmentFailed": "Anreicherung fehlgeschlagen",
       "uploadFailed": "Upload fehlgeschlagen",
       "noTranscription": "Keine Transkription zum Anreichern",
-      "nothingToCopy": "Nichts zum Kopieren"
+      "nothingToCopy": "Nichts zum Kopieren",
+      "exportFailed": "Export fehlgeschlagen"
     },
     "messages": {
       "recordingStarted": "Aufnahme gestartet",
       "transcriptionComplete": "Transkription abgeschlossen",
       "enrichmentComplete": "Anreicherung abgeschlossen",
-      "copiedToClipboard": "In Zwischenablage kopiert"
+      "copiedToClipboard": "In Zwischenablage kopiert",
+      "downloadStarted": "Download gestartet"
     }
   },
   "settings": {
