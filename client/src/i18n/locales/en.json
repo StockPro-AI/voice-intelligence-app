@@ -160,5 +160,16 @@
     "saving": "Saving...",
     "apiKeySaved": "API configuration saved",
     "saveFailed": "Save failed"
+  },
+  "providers": {
+    "openai": "OpenAI",
+    "anthropic": "Anthropic (Claude)",
+    "openrouter": "OpenRouter",
+    "lmstudio": "LMStudio (Local)",
+    "ollama": "Ollama (Local)",
+    "endpoint": "Endpoint",
+    "endpointPlaceholder": "e.g. http://localhost:1234",
+    "apiKeyOptional": "API Key (optional)",
+    "localServiceNote": "Leave empty for local services"
   }
 }

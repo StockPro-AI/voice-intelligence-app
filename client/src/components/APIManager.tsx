@@ -20,7 +20,8 @@ export function APIManager() {
   const { t } = useTranslation();
   const [apiKey, setApiKey] = useState('');
   const [showApiKey, setShowApiKey] = useState(false);
-  const [provider, setProvider] = useState<'openai' | 'anthropic' | 'custom'>('openai');
+  const [provider, setProvider] = useState<'openai' | 'anthropic' | 'openrouter' | 'lmstudio' | 'ollama'>('openai');
+  const [endpoint, setEndpoint] = useState<string>('');
   const [isLoading, setIsLoading] = useState(false);
   const [isTesting, setIsTesting] = useState(false);
   const [availableModels, setAvailableModels] = useState<AIModel[]>([]);
@@ -42,6 +43,7 @@ export function APIManager() {
       const result = await testConnectionMutation.mutateAsync({
         apiKey,
         provider,
+        endpoint: endpoint || undefined,
       });
 
       setTestResult({
@@ -53,6 +55,7 @@ export function APIManager() {
       const modelsResult = await getModelsMutation.mutateAsync({
         apiKey,
         provider,
+        endpoint: endpoint || undefined,
       });
 
       setAvailableModels(modelsResult.models);
@@ -85,6 +88,7 @@ export function APIManager() {
         apiKey,
         provider,
         selectedModel,
+        endpoint: endpoint || undefined,
       });
 
       toast.success(t('apiManager.apiKeySaved'));
@@ -122,21 +126,38 @@ export function APIManager() {
           <SelectContent>
             <SelectItem value="openai">OpenAI</SelectItem>
             <SelectItem value="anthropic">Anthropic (Claude)</SelectItem>
-            <SelectItem value="custom">Custom API</SelectItem>
+            <SelectItem value="openrouter">OpenRouter</SelectItem>
+            <SelectItem value="lmstudio">LMStudio (Local)</SelectItem>
+            <SelectItem value="ollama">Ollama (Local)</SelectItem>
           </SelectContent>
         </Select>
       </Card>
 
+      {/* Endpoint Input for Local Services */}
+      {(provider === 'lmstudio' || provider === 'ollama') && (
+        <Card className="p-6 bg-card border-border">
+          <label className="block text-sm font-medium text-foreground mb-2">
+            Endpoint
+          </label>
+          <Input
+            type="text"
+            placeholder={provider === 'lmstudio' ? 'http://localhost:1234' : 'http://localhost:11434'}
+            value={endpoint}
+            onChange={(e) => setEndpoint(e.target.value)}
+          />
+        </Card>
+      )}
+
       {/* API Key Input */}
       <Card className="p-6 bg-card border-border">
         <label className="block text-sm font-medium text-foreground mb-2">
-          {t('apiManager.apiKey')}
+          {(provider === 'lmstudio' || provider === 'ollama') ? 'API Key (optional)' : t('apiManager.apiKey')}
         </label>
         <div className="flex gap-2">
           <div className="relative flex-1">
             <Input
               type={showApiKey ? 'text' : 'password'}
-              placeholder={t('apiManager.apiKeyPlaceholder')}
+              placeholder={(provider === 'lmstudio' || provider === 'ollama') ? 'Leave empty for local services' : t('apiManager.apiKeyPlaceholder')}
               value={apiKey}
               onChange={(e) => setApiKey(e.target.value)}
               className="pr-10"
@@ -150,7 +171,7 @@ export function APIManager() {
           </div>
           <Button
             onClick={handleTestConnection}
-            disabled={isTesting || !apiKey.trim()}
+            disabled={isTesting || (!apiKey.trim() && provider !== 'lmstudio' && provider !== 'ollama')}
             variant="outline"
           >
             {isTesting ? (
