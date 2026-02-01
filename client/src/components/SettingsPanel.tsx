@@ -6,14 +6,19 @@ import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Switch } from '@/components/ui/switch';
 import { Input } from '@/components/ui/input';
-import { Loader2, Save, RotateCcw, Keyboard, Volume2, Zap, Moon } from 'lucide-react';
+import { Loader2, Save, Keyboard, Volume2, Zap, Moon, Globe } from 'lucide-react';
 import { toast } from 'sonner';
+import { useTranslation } from 'react-i18next';
+import { useTheme } from '@/contexts/ThemeContext';
+import { LanguageSwitcher } from './LanguageSwitcher';
 
 interface SettingsPanelProps {
   onClose?: () => void;
 }
 
 export function SettingsPanel({ onClose }: SettingsPanelProps) {
+  const { t } = useTranslation();
+  const { theme, toggleTheme } = useTheme();
   const [isRecordingHotkey, setIsRecordingHotkey] = useState(false);
   const [recordedHotkey, setRecordedHotkey] = useState<string>('');
   const [hasChanges, setHasChanges] = useState(false);
@@ -63,7 +68,6 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
       if (e.altKey) keys.push('Alt');
       if (e.metaKey) keys.push('Meta');
 
-      // Get the key name
       const key = e.key.toUpperCase();
       if (!/^[A-Z0-9]$/.test(key)) return;
 
@@ -73,20 +77,20 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
       setIsRecordingHotkey(false);
       setLocalSettings({ ...localSettings, globalHotkey: hotkey });
       setHasChanges(true);
-      toast.success(`Hotkey recorded: ${hotkey}`);
+      toast.success(`${t('settings.hotkeyRecorded')}: ${hotkey}`);
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isRecordingHotkey, localSettings]);
+  }, [isRecordingHotkey, localSettings, t]);
 
   const handleSaveHotkey = async () => {
     try {
       await updateHotkey.mutateAsync({ hotkey: localSettings.globalHotkey });
-      toast.success('Hotkey saved. Restart the app for changes to take effect.');
+      toast.success(t('settings.hotkeyUpdated'));
       setHasChanges(false);
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Failed to save hotkey';
+      const message = error instanceof Error ? error.message : t('common.error');
       toast.error(message);
     }
   };
@@ -95,9 +99,9 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
     try {
       setLocalSettings({ ...localSettings, transcriptionLanguage: language });
       await updateLanguage.mutateAsync({ language: language as any });
-      toast.success('Transcription language updated');
+      toast.success(t('settings.messages.languageUpdated'));
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Failed to update language';
+      const message = error instanceof Error ? error.message : t('common.error');
       toast.error(message);
     }
   };
@@ -106,9 +110,9 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
     try {
       setLocalSettings({ ...localSettings, enrichmentMode: mode as 'summary' | 'structure' | 'format' | 'context' });
       await updateEnrichmentMode.mutateAsync({ mode: mode as 'summary' | 'structure' | 'format' | 'context' });
-      toast.success('Default enrichment mode updated');
+      toast.success(t('settings.messages.modeUpdated'));
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Failed to update enrichment mode';
+      const message = error instanceof Error ? error.message : t('common.error');
       toast.error(message);
     }
   };
@@ -117,9 +121,9 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
     try {
       setLocalSettings({ ...localSettings, autoEnrich: checked });
       await updateAutoEnrich.mutateAsync({ autoEnrich: checked });
-      toast.success('Auto-enrich setting updated');
+      toast.success(t('settings.messages.autoEnrichUpdated'));
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Failed to update auto-enrich';
+      const message = error instanceof Error ? error.message : t('common.error');
       toast.error(message);
     }
   };
@@ -127,10 +131,11 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
   const handleDarkModeChange = async (checked: boolean) => {
     try {
       setLocalSettings({ ...localSettings, darkMode: checked });
+      toggleTheme();
       await updateDarkMode.mutateAsync({ darkMode: checked });
-      toast.success('Theme updated');
+      toast.success(t('settings.messages.themeUpdated'));
     } catch (error) {
-      const message = error instanceof Error ? error.message : 'Failed to update theme';
+      const message = error instanceof Error ? error.message : t('common.error');
       toast.error(message);
     }
   };
@@ -146,10 +151,10 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
   return (
     <div className="w-full max-w-2xl mx-auto space-y-6 p-6">
       <div className="flex justify-between items-center mb-8">
-        <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Settings</h2>
+        <h2 className="text-3xl font-bold text-slate-900 dark:text-white">{t('settings.title')}</h2>
         {onClose && (
           <Button onClick={onClose} variant="outline" className="text-sm">
-            Close
+            {t('common.close')}
           </Button>
         )}
       </div>
@@ -162,10 +167,10 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
           </div>
           <div className="flex-1">
             <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
-              Global Hotkey
+              {t('settings.globalHotkey')}
             </h3>
             <p className="text-sm text-slate-600 dark:text-slate-400">
-              Press any key combination to record a new hotkey. Format: Ctrl+Shift+V
+              {t('settings.hotkeyDescription')}
             </p>
           </div>
         </div>
@@ -173,7 +178,7 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
         <div className="space-y-4">
           <div>
             <Label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">
-              Current Hotkey
+              {t('settings.currentHotkey')}
             </Label>
             <div className="flex gap-2">
               <Input
@@ -187,7 +192,7 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
                 variant={isRecordingHotkey ? 'default' : 'outline'}
                 className={isRecordingHotkey ? 'bg-red-500 hover:bg-red-600' : ''}
               >
-                {isRecordingHotkey ? 'Recording...' : 'Record'}
+                {isRecordingHotkey ? t('settings.recording') : t('settings.record')}
               </Button>
             </div>
           </div>
@@ -201,12 +206,12 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
               {updateHotkey.isPending ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Saving...
+                  {t('settings.saving')}
                 </>
               ) : (
                 <>
                   <Save className="w-4 h-4 mr-2" />
-                  Save Hotkey
+                  {t('settings.saveHotkey')}
                 </>
               )}
             </Button>
@@ -222,17 +227,17 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
           </div>
           <div className="flex-1">
             <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
-              Transcription Language
+              {t('settings.transcriptionLanguage')}
             </h3>
             <p className="text-sm text-slate-600 dark:text-slate-400">
-              Choose the language for speech-to-text transcription
+              {t('settings.languageDescription')}
             </p>
           </div>
         </div>
 
         <div>
           <Label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">
-            Language
+            {t('settings.language')}
           </Label>
           <Select value={localSettings.transcriptionLanguage} onValueChange={handleLanguageChange}>
             <SelectTrigger className="w-full bg-white dark:bg-slate-700 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600">
@@ -257,10 +262,10 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
           </div>
           <div className="flex-1">
             <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
-              Default Enrichment Mode
+              {t('settings.enrichmentMode')}
             </h3>
             <p className="text-sm text-slate-600 dark:text-slate-400">
-              Choose the default AI enrichment strategy for transcriptions
+              {t('settings.modeDescription')}
             </p>
           </div>
         </div>
@@ -268,17 +273,17 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
         <div className="space-y-4">
           <div>
             <Label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">
-              Mode
+              {t('settings.mode')}
             </Label>
             <Select value={localSettings.enrichmentMode} onValueChange={handleEnrichmentModeChange}>
               <SelectTrigger className="w-full bg-white dark:bg-slate-700 text-slate-900 dark:text-white border border-slate-300 dark:border-slate-600">
                 <SelectValue placeholder="Select mode" />
               </SelectTrigger>
               <SelectContent className="bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600">
-                <SelectItem value="summary">Summary - Concise overview</SelectItem>
-                <SelectItem value="structure">Structure - Organized outline</SelectItem>
-                <SelectItem value="format">Format - Formatted notes</SelectItem>
-                <SelectItem value="context">Context - Context-aware processing</SelectItem>
+                <SelectItem value="summary">{t('settings.summaryMode')}</SelectItem>
+                <SelectItem value="structure">{t('settings.structureMode')}</SelectItem>
+                <SelectItem value="format">{t('settings.formatMode')}</SelectItem>
+                <SelectItem value="context">{t('settings.contextMode')}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -286,10 +291,10 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
           <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-700/50 rounded-lg border border-slate-200 dark:border-slate-600">
             <div>
               <Label className="text-sm font-medium text-slate-700 dark:text-slate-300">
-                Auto-Enrich Transcriptions
+                {t('settings.autoEnrich')}
               </Label>
               <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-                Automatically enrich transcriptions after recording
+                {t('settings.autoEnrichDesc')}
               </p>
             </div>
             <Switch
@@ -297,6 +302,30 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
               onCheckedChange={handleAutoEnrichChange}
             />
           </div>
+        </div>
+      </Card>
+
+      {/* Interface Language Section */}
+      <Card className="p-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+        <div className="flex items-start gap-4 mb-6">
+          <div className="p-3 bg-orange-100 dark:bg-orange-900/30 rounded-lg">
+            <Globe className="w-6 h-6 text-orange-600 dark:text-orange-400" />
+          </div>
+          <div className="flex-1">
+            <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+              {t('settings.interfaceLanguage')}
+            </h3>
+            <p className="text-sm text-slate-600 dark:text-slate-400">
+              {t('settings.interfaceLanguageDesc')}
+            </p>
+          </div>
+        </div>
+
+        <div>
+          <Label className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-2 block">
+            {t('settings.language')}
+          </Label>
+          <LanguageSwitcher />
         </div>
       </Card>
 
@@ -308,10 +337,10 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
           </div>
           <div className="flex-1">
             <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
-              Appearance
+              {t('settings.appearance')}
             </h3>
             <p className="text-sm text-slate-600 dark:text-slate-400">
-              Customize the visual appearance of the application
+              {t('settings.appearanceDesc')}
             </p>
           </div>
         </div>
@@ -319,15 +348,15 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
         <div className="flex items-center justify-between p-4 bg-slate-50 dark:bg-slate-700/50 rounded-lg border border-slate-200 dark:border-slate-600">
           <div>
             <Label className="text-sm font-medium text-slate-700 dark:text-slate-300">
-              Dark Mode
+              {t('settings.darkMode')}
             </Label>
             <p className="text-xs text-slate-600 dark:text-slate-400 mt-1">
-              Use dark theme for the interface
+              {t('settings.darkModeDesc')}
             </p>
           </div>
           <Switch
-            checked={localSettings.darkMode}
-            onCheckedChange={handleDarkModeChange}
+            checked={theme === 'dark'}
+            onCheckedChange={() => handleDarkModeChange(theme === 'light')}
           />
         </div>
       </Card>
@@ -335,8 +364,7 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
       {/* Info Section */}
       <Card className="p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800">
         <p className="text-sm text-blue-900 dark:text-blue-200">
-          <strong>Note:</strong> Hotkey changes require restarting the application to take effect.
-          Other settings are applied immediately.
+          <strong>{t('common.warning')}:</strong> {t('settings.hotkeyNote')}
         </p>
       </Card>
     </div>

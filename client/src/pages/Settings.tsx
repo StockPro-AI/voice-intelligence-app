@@ -3,9 +3,13 @@ import { SettingsPanel } from '@/components/SettingsPanel';
 import { useLocation } from 'wouter';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { ThemeSwitcher } from '@/components/ThemeSwitcher';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 
 export default function SettingsPage() {
   const [, setLocation] = useLocation();
+  const { t } = useTranslation();
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800">
@@ -20,9 +24,13 @@ export default function SettingsPage() {
               className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back
+              {t('settings.back')}
             </Button>
-            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">Settings</h1>
+            <h1 className="text-2xl font-bold text-slate-900 dark:text-white">{t('settings.title')}</h1>
+          </div>
+          <div className="flex items-center gap-2">
+            <ThemeSwitcher />
+            <LanguageSwitcher compact={true} />
           </div>
         </div>
       </header>

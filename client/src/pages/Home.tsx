@@ -5,17 +5,21 @@ import { Button } from '@/components/ui/button';
 import { getLoginUrl } from '@/const';
 import { useLocation } from 'wouter';
 import { Mic, Settings } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import { ThemeSwitcher } from '@/components/ThemeSwitcher';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 
 export default function Home() {
   const { user, loading, isAuthenticated, logout } = useAuth();
   const [, setLocation] = useLocation();
+  const { t } = useTranslation();
 
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-          <p className="text-slate-600 dark:text-slate-400">Loading...</p>
+          <p className="text-slate-600 dark:text-slate-400">{t('common.loading')}</p>
         </div>
       </div>
     );
@@ -31,11 +35,13 @@ export default function Home() {
               <Mic className="w-6 h-6 text-white" />
             </div>
             <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
-              Voice Intelligence
+              {t('common.appName')}
             </h1>
           </div>
 
           <div className="flex items-center gap-4">
+            <ThemeSwitcher />
+            <LanguageSwitcher compact={true} />
             {isAuthenticated ? (
               <>
                 <div className="text-right hidden sm:block">
@@ -59,7 +65,7 @@ export default function Home() {
                   variant="outline"
                   className="text-sm"
                 >
-                  Logout
+                  {t('common.logout')}
                 </Button>
               </>
             ) : (
@@ -67,7 +73,7 @@ export default function Home() {
                 onClick={() => (window.location.href = getLoginUrl())}
                 className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white"
               >
-                Login
+                {t('common.login')}
               </Button>
             )}
           </div>
@@ -81,11 +87,10 @@ export default function Home() {
           <div className="text-center space-y-8 py-20">
             <div className="space-y-4">
               <h2 className="text-5xl md:text-6xl font-bold text-slate-900 dark:text-white">
-                Transform Your Voice Into Intelligence
+                {t('home.landingTitle')}
               </h2>
               <p className="text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto">
-                Record, transcribe, and intelligently enrich your thoughts with AI-powered processing.
-                Seamless desktop integration with global hotkey activation.
+                {t('home.landingDescription')}
               </p>
             </div>
 
@@ -95,14 +100,14 @@ export default function Home() {
                 size="lg"
                 className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold px-8"
               >
-                Get Started
+                {t('home.getStarted')}
               </Button>
               <Button
                 variant="outline"
                 size="lg"
                 className="font-semibold px-8"
               >
-                Learn More
+                {t('home.learnMore')}
               </Button>
             </div>
 
@@ -110,18 +115,18 @@ export default function Home() {
             <div className="grid md:grid-cols-3 gap-8 pt-16">
               {[
                 {
-                  title: 'Voice Recording',
-                  description: 'Crystal-clear audio capture with advanced noise cancellation',
+                  title: t('home.features.recording'),
+                  description: t('home.features.recordingDesc'),
                   icon: '🎤',
                 },
                 {
-                  title: 'AI Transcription',
-                  description: 'Accurate speech-to-text powered by Whisper API',
+                  title: t('home.features.transcription'),
+                  description: t('home.features.transcriptionDesc'),
                   icon: '📝',
                 },
                 {
-                  title: 'Smart Enrichment',
-                  description: 'Transform transcripts with AI-powered formatting and summarization',
+                  title: t('home.features.enrichment'),
+                  description: t('home.features.enrichmentDesc'),
                   icon: '✨',
                 },
               ].map((feature, idx) => (
@@ -143,10 +148,10 @@ export default function Home() {
           <div className="space-y-8">
             <div className="text-center space-y-2 mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white">
-                Voice Intelligence Assistant
+                {t('home.title')}
               </h2>
               <p className="text-slate-600 dark:text-slate-400">
-                Press Alt+Shift+V to activate anytime, or use the interface below
+                {t('home.subtitle')}
               </p>
             </div>
 
@@ -158,7 +163,7 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t border-slate-200 dark:border-slate-700 bg-white/50 dark:bg-slate-900/50 backdrop-blur-sm mt-20">
         <div className="max-w-6xl mx-auto px-4 py-8 text-center text-sm text-slate-600 dark:text-slate-400">
-          <p>Voice Intelligence © 2026. All rights reserved.</p>
+          <p>{t('home.copyright')}</p>
         </div>
       </footer>
     </div>

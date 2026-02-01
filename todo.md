@@ -106,3 +106,15 @@ External Services
 - [x] Persistierung von Settings in Datenbank
 - [ ] Real-time Hotkey-Update ohne Neustart
 - [x] Unit-Tests für Settings-Router
+
+
+## Phase 10: Dark Mode & Internationalisierung (i18n)
+- [x] i18n Setup mit react-i18next
+- [x] Übersetzungsdateien für Deutsch und Englisch
+- [x] Theme-Switcher Komponente
+- [x] Dark Mode CSS und Tailwind-Integration
+- [x] Sprach-Umschalter in Settings
+- [x] Alle UI-Komponenten mit i18n aktualisieren
+- [x] Persistierung von Theme und Sprache
+- [x] Dark Mode als Standard
+- [x] Deutsch als Standard-Sprache
