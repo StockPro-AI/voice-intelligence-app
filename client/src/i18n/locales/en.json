@@ -11,7 +11,10 @@
     "warning": "Warning",
     "settings": "Settings",
     "logout": "Logout",
-    "login": "Login"
+    "login": "Login",
+    "page": "Page",
+    "of": "of",
+    "itemsPerPage": "Items per page"
   },
   "home": {
     "title": "Voice Intelligence Assistant",
@@ -129,5 +132,11 @@
       "favoriteUpdated": "Favorite updated",
       "exported": "Exported"
     }
+  },
+  "tray": {
+    "minimizeToTray": "Minimize to system tray",
+    "minimizedToTray": "Minimized to system tray",
+    "minimizeError": "Error minimizing window",
+    "recordingStarted": "Recording started"
   }
 }

@@ -11,7 +11,10 @@
     "warning": "Warnung",
     "settings": "Einstellungen",
     "logout": "Abmelden",
-    "login": "Anmelden"
+    "login": "Anmelden",
+    "page": "Seite",
+    "of": "von",
+    "itemsPerPage": "Elemente pro Seite"
   },
   "home": {
     "title": "Voice Intelligence Assistent",
@@ -129,5 +132,11 @@
       "favoriteUpdated": "Favorit aktualisiert",
       "exported": "Exportiert"
     }
+  },
+  "tray": {
+    "minimizeToTray": "In Systemablage minimieren",
+    "minimizedToTray": "In Systemablage minimiert",
+    "minimizeError": "Fehler beim Minimieren",
+    "recordingStarted": "Aufnahme gestartet"
   }
 }

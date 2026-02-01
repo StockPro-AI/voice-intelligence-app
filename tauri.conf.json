@@ -47,6 +47,9 @@
     },
     "shell": {
       "open": ""
+    },
+    "system-tray": {
+      "allow": ["new", "new_with_id"]
     }
   }
 }

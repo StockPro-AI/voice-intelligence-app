@@ -171,3 +171,17 @@ External Services
 - [x] Integration-Tests für Transkriptions-Pipeline
 - [x] Centralized Error Handler mit Retry-Logik
 - [x] Logging Utilities (logError, logInfo, logWarn, logDebug)
+
+
+## Phase 15: System-Tray Integration
+- [x] Tauri System-Tray Plugin konfigurieren
+- [x] Tray-Icon mit App-Logo erstellen
+- [x] Tauri Commands für Tray-Verwaltung (show, hide, minimize, quit)
+- [x] Tray-Menü mit Quick-Access-Optionen
+- [x] Window-Management für Show/Hide/Minimize
+- [x] Hotkey-Integration mit Tray
+- [x] Frontend-Integration mit Tray-Events
+- [x] Hintergrundbetrieb ermöglichen (minimize to tray)
+- [x] Tray-Icon-Kontextmenü mit Aktionen
+- [x] Benachrichtigungen vom Tray
+- [x] i18n für Tray-Texte (Deutsch/Englisch)
