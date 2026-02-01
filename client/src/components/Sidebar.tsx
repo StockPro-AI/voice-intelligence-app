@@ -88,20 +88,20 @@ export function Sidebar({ isOpen: initialOpen = true, onToggle }: SidebarProps) 
             const isActive = item.active;
 
             return (
-              <Link key={item.href} href={item.href}>
-                <a
-                  className={cn(
-                    'flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200',
-                    isActive
-                      ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
-                      : 'text-slate-400 hover:text-white hover:bg-slate-700'
-                  )}
-                  title={isOpen ? undefined : item.label}
-                >
-                  <Icon className="w-5 h-5 flex-shrink-0" />
-                  {isOpen && <span className="text-sm font-medium truncate">{item.label}</span>}
-                </a>
-              </Link>
+              <a
+                key={item.href}
+                href={item.href}
+                className={cn(
+                  'flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 block',
+                  isActive
+                    ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg'
+                    : 'text-slate-400 hover:text-white hover:bg-slate-700'
+                )}
+                title={isOpen ? undefined : item.label}
+              >
+                <Icon className="w-5 h-5 flex-shrink-0" />
+                {isOpen && <span className="text-sm font-medium truncate">{item.label}</span>}
+              </a>
             );
           })}
         </nav>
