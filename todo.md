@@ -144,3 +144,10 @@ External Services
 - [x] i18n für History-Texte
 - [ ] Pagination für große History-Listen
 - [x] Unit-Tests für History-Router
+
+
+## Bug Fixes
+- [x] Audio-File-Download-Fehler in Transkriptions-Pipeline beheben
+- [x] Fehlerbehandlung für fehlgeschlagene Audio-Downloads verbessern
+- [x] Detailliertes Logging für Debugging hinzufügen
+- [x] Neue transcribeAudioDirect Procedure für direkten Base64-Upload

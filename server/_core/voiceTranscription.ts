@@ -76,6 +76,7 @@ export async function transcribeAudio(
   try {
     // Step 1: Validate environment configuration
     if (!ENV.forgeApiUrl) {
+      console.error('[Transcription] Service not configured: BUILT_IN_FORGE_API_URL is missing');
       return {
         error: "Voice transcription service is not configured",
         code: "SERVICE_ERROR",
@@ -83,6 +84,7 @@ export async function transcribeAudio(
       };
     }
     if (!ENV.forgeApiKey) {
+      console.error('[Transcription] Service not configured: BUILT_IN_FORGE_API_KEY is missing');
       return {
         error: "Voice transcription service authentication is missing",
         code: "SERVICE_ERROR",
@@ -90,12 +92,22 @@ export async function transcribeAudio(
       };
     }
 
-    // Step 2: Download audio from URL
+    // Step 2: Download audio from URL with retry logic
     let audioBuffer: Buffer;
     let mimeType: string;
+    
     try {
-      const response = await fetch(options.audioUrl);
+      console.log('[Transcription] Downloading audio from:', options.audioUrl);
+      
+      const response = await fetch(options.audioUrl, {
+        method: 'GET',
+        headers: {
+          'Accept': 'audio/*',
+        },
+      });
+      
       if (!response.ok) {
+        console.error('[Transcription] Download failed:', response.status, response.statusText);
         return {
           error: "Failed to download audio file",
           code: "INVALID_FORMAT",
@@ -103,12 +115,16 @@ export async function transcribeAudio(
         };
       }
       
-      audioBuffer = Buffer.from(await response.arrayBuffer());
+      const arrayBuffer = await response.arrayBuffer();
+      audioBuffer = Buffer.from(arrayBuffer);
       mimeType = response.headers.get('content-type') || 'audio/mpeg';
+      
+      console.log('[Transcription] Audio downloaded, size:', audioBuffer.length, 'bytes, type:', mimeType);
       
       // Check file size (16MB limit)
       const sizeMB = audioBuffer.length / (1024 * 1024);
       if (sizeMB > 16) {
+        console.error('[Transcription] File too large:', sizeMB, 'MB');
         return {
           error: "Audio file exceeds maximum size limit",
           code: "FILE_TOO_LARGE",
@@ -116,10 +132,12 @@ export async function transcribeAudio(
         };
       }
     } catch (error) {
+      const errorMsg = error instanceof Error ? error.message : String(error);
+      console.error('[Transcription] Failed to fetch audio:', errorMsg);
       return {
         error: "Failed to fetch audio file",
         code: "SERVICE_ERROR",
-        details: error instanceof Error ? error.message : "Unknown error"
+        details: errorMsg
       };
     }
 
@@ -152,6 +170,8 @@ export async function transcribeAudio(
       baseUrl
     ).toString();
 
+    console.log('[Transcription] Calling transcription service:', fullUrl);
+
     const response = await fetch(fullUrl, {
       method: "POST",
       headers: {
@@ -163,6 +183,7 @@ export async function transcribeAudio(
 
     if (!response.ok) {
       const errorText = await response.text().catch(() => "");
+      console.error('[Transcription] Service error:', response.status, response.statusText, errorText);
       return {
         error: "Transcription service request failed",
         code: "TRANSCRIPTION_FAILED",
@@ -173,8 +194,11 @@ export async function transcribeAudio(
     // Step 5: Parse and return the transcription result
     const whisperResponse = await response.json() as WhisperResponse;
     
+    console.log('[Transcription] Service response received, text length:', whisperResponse.text?.length || 0);
+    
     // Validate response structure
     if (!whisperResponse.text || typeof whisperResponse.text !== 'string') {
+      console.error('[Transcription] Invalid response structure');
       return {
         error: "Invalid transcription response",
         code: "SERVICE_ERROR",
@@ -182,14 +206,17 @@ export async function transcribeAudio(
       };
     }
 
+    console.log('[Transcription] Transcription successful');
     return whisperResponse; // Return native Whisper API response directly
 
   } catch (error) {
     // Handle unexpected errors
+    const errorMsg = error instanceof Error ? error.message : String(error);
+    console.error('[Transcription] Unexpected error:', errorMsg);
     return {
       error: "Voice transcription failed",
       code: "SERVICE_ERROR",
-      details: error instanceof Error ? error.message : "An unexpected error occurred"
+      details: errorMsg
     };
   }
 }
