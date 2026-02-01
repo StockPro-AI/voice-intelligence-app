@@ -93,3 +93,16 @@ External Services
 - **Styling**: Tailwind CSS 4 + shadcn/ui (Elegant & Professional)
 - **State Management**: React Query + tRPC (Type-safe)
 - **Desktop Integration**: Tauri Global Hotkeys + System Tray
+
+
+## Phase 9: Settings-Panel Entwicklung
+- [x] Datenbankschema für Benutzer-Einstellungen erweitern
+- [x] Backend-Procedures für Settings-Verwaltung (Get/Update)
+- [x] Hotkey-Validierung und Konflikt-Erkennung
+- [x] Settings-UI-Komponente mit eleganter Gestaltung
+- [x] Hotkey-Recorder/Editor-Interface
+- [x] Sprach-Auswahl mit Vorschau
+- [x] Settings in App-Navigation integrieren
+- [x] Persistierung von Settings in Datenbank
+- [ ] Real-time Hotkey-Update ohne Neustart
+- [x] Unit-Tests für Settings-Router

@@ -3,10 +3,12 @@ import { VoiceRecorder } from '@/components/VoiceRecorder';
 import { useAuth } from '@/_core/hooks/useAuth';
 import { Button } from '@/components/ui/button';
 import { getLoginUrl } from '@/const';
-import { Mic } from 'lucide-react';
+import { useLocation } from 'wouter';
+import { Mic, Settings } from 'lucide-react';
 
 export default function Home() {
   const { user, loading, isAuthenticated, logout } = useAuth();
+  const [, setLocation] = useLocation();
 
   if (loading) {
     return (
@@ -44,6 +46,14 @@ export default function Home() {
                     {user?.role === 'admin' ? 'Admin' : 'User'}
                   </p>
                 </div>
+                <Button
+                  onClick={() => setLocation('/settings')}
+                  variant="ghost"
+                  size="sm"
+                  className="text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white"
+                >
+                  <Settings className="w-4 h-4" />
+                </Button>
                 <Button
                   onClick={() => logout()}
                   variant="outline"

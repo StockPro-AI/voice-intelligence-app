@@ -1,4 +1,4 @@
-import { int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { boolean, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 
 /**
  * Core user table backing auth flow.
@@ -22,7 +22,40 @@ export const users = mysqlTable("users", {
   lastSignedIn: timestamp("lastSignedIn").defaultNow().notNull(),
 });
 
+
+
 export type User = typeof users.$inferSelect;
 export type InsertUser = typeof users.$inferInsert;
+
+// Supported languages for transcription
+export const TRANSCRIPTION_LANGUAGES = {
+  en: "English",
+  de: "German",
+  fr: "French",
+  es: "Spanish",
+  it: "Italian",
+  pt: "Portuguese",
+  nl: "Dutch",
+  ru: "Russian",
+  ja: "Japanese",
+  zh: "Chinese",
+} as const;
+
+export type TranscriptionLanguage = keyof typeof TRANSCRIPTION_LANGUAGES;
+
+export const userSettings = mysqlTable("user_settings", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull().unique(),
+  globalHotkey: varchar("globalHotkey", { length: 64 }).default("Alt+Shift+V").notNull(),
+  transcriptionLanguage: varchar("transcriptionLanguage", { length: 10 }).default("en").notNull(),
+  enrichmentMode: mysqlEnum("enrichmentMode", ["summary", "structure", "format", "context"]).default("summary").notNull(),
+  autoEnrich: boolean("autoEnrich").default(false).notNull(),
+  darkMode: boolean("darkMode").default(true).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type UserSettings = typeof userSettings.$inferSelect;
+export type InsertUserSettings = typeof userSettings.$inferInsert;
 
 // TODO: Add your tables here

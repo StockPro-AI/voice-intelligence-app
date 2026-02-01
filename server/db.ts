@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 import { drizzle } from "drizzle-orm/mysql2";
-import { InsertUser, users } from "../drizzle/schema";
+import { InsertUser, InsertUserSettings, users, userSettings } from "../drizzle/schema";
 import { ENV } from './_core/env';
 
 let _db: ReturnType<typeof drizzle> | null = null;
@@ -87,6 +87,64 @@ export async function getUserByOpenId(openId: string) {
   const result = await db.select().from(users).where(eq(users.openId, openId)).limit(1);
 
   return result.length > 0 ? result[0] : undefined;
+}
+
+export async function getUserSettings(userId: number) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot get settings: database not available");
+    return undefined;
+  }
+
+  try {
+    const result = await db
+      .select()
+      .from(userSettings)
+      .where(eq(userSettings.userId, userId))
+      .limit(1);
+
+    if (result.length > 0) {
+      return result[0];
+    }
+
+    // Create default settings if not exists
+    await db.insert(userSettings).values({
+      userId,
+      globalHotkey: "Alt+Shift+V",
+      transcriptionLanguage: "en",
+      enrichmentMode: "summary",
+      autoEnrich: false,
+      darkMode: true,
+    });
+
+    return await getUserSettings(userId);
+  } catch (error) {
+    console.error("[Database] Failed to get user settings:", error);
+    return undefined;
+  }
+}
+
+export async function updateUserSettings(
+  userId: number,
+  settings: Partial<InsertUserSettings>
+) {
+  const db = await getDb();
+  if (!db) {
+    console.warn("[Database] Cannot update settings: database not available");
+    return undefined;
+  }
+
+  try {
+    await db
+      .update(userSettings)
+      .set(settings)
+      .where(eq(userSettings.userId, userId));
+
+    return await getUserSettings(userId);
+  } catch (error) {
+    console.error("[Database] Failed to update user settings:", error);
+    throw error;
+  }
 }
 
 // TODO: add feature queries here as your schema grows.
