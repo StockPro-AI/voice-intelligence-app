@@ -239,3 +239,14 @@ External Services
 - [ ] Stabilitätsrisiken beheben
 - [ ] Type-Safety überprüfen
 - [ ] Memory Leaks prüfen
+
+
+## Phase 22: Error-Handling Audit & Validierung
+- [x] Backend Error-Handling in allen Procedures
+- [x] Input-Validierung mit Zod Schemas
+- [x] Frontend Input-Validierung
+- [ ] Error-UI und Benutzer-Feedback
+- [x] Globale Error-Handling Utilities
+- [ ] Fehlerprävention in kritischen Procedures
+- [ ] Logging und Monitoring
+- [ ] Dokumentation und Testing
