@@ -3,6 +3,7 @@ import { publicProcedure, router } from '../_core/trpc';
 import { transcribeAudio } from '../_core/voiceTranscription';
 import { invokeLLM } from '../_core/llm';
 import { storagePut } from '../storage';
+import { enrichmentCache } from '../_core/enrichmentCache';
 import { nanoid } from 'nanoid';
 
 export const transcriptionRouter = router({
@@ -96,11 +97,26 @@ export const transcriptionRouter = router({
         text: z.string(),
         mode: z.enum(['summary', 'structure', 'format', 'context']),
         context: z.string().optional(),
+        useCache: z.boolean().optional().default(true),
       })
     )
     .mutation(async ({ input }) => {
       try {
         console.log('[Enrichment] Starting enrichment with mode:', input.mode);
+        
+        // Check cache first
+        if (input.useCache) {
+          const cached = enrichmentCache.get(input.text, input.mode, input.context);
+          if (cached) {
+            console.log('[Enrichment] Cache hit for mode:', input.mode);
+            return {
+              success: true,
+              enrichedText: cached,
+              mode: input.mode,
+              fromCache: true,
+            };
+          }
+        }
         
         const prompts = {
           summary: `Erstelle eine prägnante Zusammenfassung des folgenden Textes in 2-3 Sätzen:\n\n${input.text}`,
@@ -125,12 +141,16 @@ export const transcriptionRouter = router({
         const enrichedText =
           response.choices[0]?.message.content || 'Enrichment failed';
 
-        console.log('[Enrichment] Enrichment successful');
+        // Store in cache
+        const textToCache = typeof enrichedText === 'string' ? enrichedText : JSON.stringify(enrichedText);
+        enrichmentCache.set(input.text, input.mode, textToCache, input.context);
+        console.log('[Enrichment] Enrichment successful, cached');
         
         return {
           success: true,
           enrichedText,
           mode: input.mode,
+          fromCache: false,
         };
       } catch (error) {
         const message = error instanceof Error ? error.message : 'Enrichment failed';

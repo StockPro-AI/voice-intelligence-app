@@ -17,14 +17,14 @@
 - [x] LLM-Enrichment-Strategien definieren (Formatierung, Zusammenfassung, Strukturierung)
 - [x] Prompt-Engineering für verschiedene Enrichment-Modi
 - [x] Streaming-Response-Handling für LLM
-- [ ] Enrichment-Cache zur Performance-Optimierung
+- [x] Enrichment-Cache zur Performance-Optimierung
 
 ## Phase 4: Hotkey & Desktop-Integration
 - [x] Tauri Global Hotkey Plugin Integration
 - [x] Hotkey-Listener für Alt+Shift+V (oder konfigurierbar)
 - [ ] Window-Management (Show/Hide, Always-on-Top)
 - [ ] System-Tray Integration für Background-Betrieb
-- [ ] Keyboard-Shortcuts für Recording-Kontrolle
+- [x] Keyboard-Shortcuts für Recording-Kontrolle
 
 ## Phase 5: UI/UX Design & Frontend
 - [x] Elegantes Design-System mit Tailwind CSS 4
@@ -37,22 +37,22 @@
 
 ## Phase 6: Export & Ergebnis-Verwaltung
 - [x] Copy-to-Clipboard Funktionalität
-- [ ] Export als Markdown/TXT/PDF
-- [ ] Verlauf/History der Aufnahmen speichern
+- [x] Export als Markdown/TXT/PDF
+- [x] Verlauf/History der Aufnahmen speichern
 - [ ] Favoriten-System für häufig verwendete Enrichment-Modi
-- [ ] Einstellungen-Panel (Hotkey-Konfiguration, Sprache, etc.)
+- [x] Einstellungen-Panel (Hotkey-Konfiguration, Sprache, etc.)
 
 ## Phase 7: Testing & Dokumentation
-- [ ] Vitest Unit-Tests für Backend-Logik
-- [ ] Integration-Tests für Transkriptions-Pipeline
+- [x] Vitest Unit-Tests für Backend-Logik
+- [x] Integration-Tests für Transkriptions-Pipeline
 - [x] README mit Architektur-Überblick
 - [x] Setup-Anleitung für Entwicklung & Distribution
 - [x] Design-Entscheidungen dokumentieren
 - [x] API-Dokumentation für Tauri Commands
 
 ## Phase 8: Finalisierung & Deployment
-- [ ] Performance-Optimierung
-- [ ] Error-Handling & Logging
+- [x] Performance-Optimierung (Enrichment-Cache)
+- [x] Error-Handling & Logging (Centralized Error Handler)
 - [ ] Build für macOS/Windows/Linux
 - [ ] Installer-Erstellung
 - [ ] GitHub Release vorbereiten
@@ -134,7 +134,7 @@ External Services
 ## Phase 12: Recording-History & Verlaufsliste
 - [x] Datenbankschema für Recording-History erweitern
 - [x] Backend-Procedures für History-Verwaltung (Create, Read, Update, Delete)
-- [ ] History-Speicherung nach jeder Aufnahme
+- [x] History-Speicherung nach jeder Aufnahme
 - [x] History-UI-Komponente mit Tabelle/Liste
 - [x] Suchfunktion für Transkripte
 - [x] Filter nach Datum, Sprache, Enrichment-Modus
@@ -142,7 +142,7 @@ External Services
 - [x] Löschen einzelner oder mehrerer Einträge
 - [x] Export von History-Einträgen
 - [x] i18n für History-Texte
-- [ ] Pagination für große History-Listen
+- [x] Pagination für große History-Listen
 - [x] Unit-Tests für History-Router
 
 
@@ -160,3 +160,14 @@ External Services
 - [x] Logging für Debugging hinzufügen
 - [x] Auto-Speicherung in Recording-History
 - [ ] Testing durchführen
+
+
+## Phase 14: Zusätzliche Features & Optimierungen
+- [x] Keyboard-Shortcuts Hook (useKeyboardShortcuts) für In-App Navigation
+- [x] PDF-Export Utility mit HTML-zu-PDF Konvertierung
+- [x] Pagination Hook und Komponente für History-Listen
+- [x] Enrichment-Cache Service mit TTL und Cleanup
+- [x] Vitest Unit-Tests für Enrichment-Cache
+- [x] Integration-Tests für Transkriptions-Pipeline
+- [x] Centralized Error Handler mit Retry-Logik
+- [x] Logging Utilities (logError, logInfo, logWarn, logDebug)
