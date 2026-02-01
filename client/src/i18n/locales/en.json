@@ -138,5 +138,27 @@
     "minimizedToTray": "Minimized to system tray",
     "minimizeError": "Error minimizing window",
     "recordingStarted": "Recording started"
+  },
+  "apiManager": {
+    "title": "API Manager",
+    "description": "Manage your AI model configurations and API connections",
+    "provider": "AI Provider",
+    "apiKey": "API Key",
+    "apiKeyPlaceholder": "Enter your API key",
+    "apiKeyRequired": "API key is required",
+    "test": "Test Connection",
+    "testing": "Testing...",
+    "connectionSuccessful": "Connection successful",
+    "connectionFailed": "Connection failed",
+    "selectModel": "Select an AI Model",
+    "chooseModel": "Choose a model...",
+    "modelRequired": "Model selection is required",
+    "modelName": "Model Name",
+    "type": "Type",
+    "contextWindow": "Context Window",
+    "saveConfiguration": "Save Configuration",
+    "saving": "Saving...",
+    "apiKeySaved": "API configuration saved",
+    "saveFailed": "Save failed"
   }
 }

@@ -138,5 +138,27 @@
     "minimizedToTray": "In Systemablage minimiert",
     "minimizeError": "Fehler beim Minimieren",
     "recordingStarted": "Aufnahme gestartet"
+  },
+  "apiManager": {
+    "title": "API Manager",
+    "description": "Verwalten Sie Ihre KI-Modell-Konfigurationen und API-Verbindungen",
+    "provider": "KI-Anbieter",
+    "apiKey": "API-Schlüssel",
+    "apiKeyPlaceholder": "Geben Sie Ihren API-Schlüssel ein",
+    "apiKeyRequired": "API-Schlüssel ist erforderlich",
+    "test": "Verbindung testen",
+    "testing": "Wird getestet...",
+    "connectionSuccessful": "Verbindung erfolgreich",
+    "connectionFailed": "Verbindung fehlgeschlagen",
+    "selectModel": "Wählen Sie ein KI-Modell",
+    "chooseModel": "Modell auswählen...",
+    "modelRequired": "Modellauswahl erforderlich",
+    "modelName": "Modellname",
+    "type": "Typ",
+    "contextWindow": "Kontext-Fenster",
+    "saveConfiguration": "Konfiguration speichern",
+    "saving": "Wird gespeichert...",
+    "apiKeySaved": "API-Konfiguration gespeichert",
+    "saveFailed": "Speichern fehlgeschlagen"
   }
 }

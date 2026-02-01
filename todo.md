@@ -185,3 +185,30 @@ External Services
 - [x] Tray-Icon-Kontextmenü mit Aktionen
 - [x] Benachrichtigungen vom Tray
 - [x] i18n für Tray-Texte (Deutsch/Englisch)
+
+
+## Phase 16: Seitenleiste & Navigation
+- [x] Seitenleisten-Komponente mit Toggle-Button
+- [x] Responsive Seitenleisten-Layout
+- [x] Navigation Items in Seitenleiste
+- [x] Seitenleisten-State Management
+- [x] Smooth Animations für Toggle
+
+## Phase 17: Desktop-Benachrichtigungen
+- [x] Tauri Notification Plugin Integration
+- [x] Benachrichtigungen für Transkriptions-Abschluss
+- [x] Benachrichtigungen für Enrichment-Abschluss
+- [x] Benachrichtigungen auch bei minimierter App
+- [x] Notification-Sounds optional
+- [x] Notification-Click Handler
+
+## Phase 18: API-Manager
+- [x] API-Manager Komponente mit eleganter UI
+- [x] API-Key Input und Validierung
+- [x] Verbindungs-Test Funktionalität
+- [x] KI-Modell-Erkennung und Listing
+- [x] Modell-Auswahl und Speicherung
+- [x] Fehlerbehandlung und Feedback
+- [x] Backend-Procedures für API-Verwaltung
+- [x] Verschlüsselte API-Key Speicherung
+- [x] i18n für API-Manager Texte

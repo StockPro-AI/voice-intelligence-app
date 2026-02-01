@@ -7,18 +7,26 @@ import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
 import Settings from "./pages/Settings";
 import History from "./pages/History";
+import APIManagerPage from "./pages/APIManager";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n/config";
+import { Sidebar } from "./components/Sidebar";
 
 function Router() {
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route path="/settings" component={Settings} />
-      <Route path="/history" component={History} />
-      <Route path="/404" component={NotFound} />
-      <Route component={NotFound} />
-    </Switch>
+    <div className="flex">
+      <Sidebar />
+      <div className="flex-1">
+        <Switch>
+          <Route path="/" component={Home} />
+          <Route path="/settings" component={Settings} />
+          <Route path="/history" component={History} />
+          <Route path="/api-manager" component={APIManagerPage} />
+          <Route path="/404" component={NotFound} />
+          <Route component={NotFound} />
+        </Switch>
+      </div>
+    </div>
   );
 }
 
