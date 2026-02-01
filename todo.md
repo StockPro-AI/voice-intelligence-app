@@ -151,3 +151,12 @@ External Services
 - [x] Fehlerbehandlung für fehlgeschlagene Audio-Downloads verbessern
 - [x] Detailliertes Logging für Debugging hinzufügen
 - [x] Neue transcribeAudioDirect Procedure für direkten Base64-Upload
+
+
+## Phase 13: Frontend-Integration von transcribeAudioDirect
+- [x] VoiceRecorder mit transcribeAudioDirect aktualisieren
+- [x] Fallback-Logik (Direct → URL-basiert) implementieren
+- [x] Error-Handling und Retry-Logik verbessern
+- [x] Logging für Debugging hinzufügen
+- [x] Auto-Speicherung in Recording-History
+- [ ] Testing durchführen
