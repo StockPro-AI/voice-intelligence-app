@@ -22,8 +22,8 @@
 ## Phase 4: Hotkey & Desktop-Integration
 - [x] Tauri Global Hotkey Plugin Integration
 - [x] Hotkey-Listener für Alt+Shift+V (oder konfigurierbar)
-- [ ] Window-Management (Show/Hide, Always-on-Top)
-- [ ] System-Tray Integration für Background-Betrieb
+- [x] Window-Management (Show/Hide, Always-on-Top)
+- [x] System-Tray Integration für Background-Betrieb
 - [x] Keyboard-Shortcuts für Recording-Kontrolle
 
 ## Phase 5: UI/UX Design & Frontend
@@ -39,7 +39,7 @@
 - [x] Copy-to-Clipboard Funktionalität
 - [x] Export als Markdown/TXT/PDF
 - [x] Verlauf/History der Aufnahmen speichern
-- [ ] Favoriten-System für häufig verwendete Enrichment-Modi
+- [x] Favoriten-System für häufig verwendete Enrichment-Modi
 - [x] Einstellungen-Panel (Hotkey-Konfiguration, Sprache, etc.)
 
 ## Phase 7: Testing & Dokumentation
@@ -245,8 +245,8 @@ External Services
 - [x] Backend Error-Handling in allen Procedures
 - [x] Input-Validierung mit Zod Schemas
 - [x] Frontend Input-Validierung
-- [ ] Error-UI und Benutzer-Feedback
+- [x] Error-UI und Benutzer-Feedback
 - [x] Globale Error-Handling Utilities
-- [ ] Fehlerprävention in kritischen Procedures
-- [ ] Logging und Monitoring
-- [ ] Dokumentation und Testing
+- [x] Fehlerprävention in kritischen Procedures
+- [x] Logging und Monitoring
+- [x] Dokumentation und Testing

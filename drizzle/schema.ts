@@ -77,3 +77,17 @@ export const recordingHistory = mysqlTable("recording_history", {
 
 export type RecordingHistory = typeof recordingHistory.$inferSelect;
 export type InsertRecordingHistory = typeof recordingHistory.$inferInsert;
+
+// Favorites for quick access to enrichment mode combinations
+export const favorites = mysqlTable("favorites", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  name: varchar("name", { length: 100 }).notNull(),
+  enrichmentMode: mysqlEnum("enrichmentMode", ["summary", "structure", "format", "context"]).notNull(),
+  description: text("description"),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Favorite = typeof favorites.$inferSelect;
+export type InsertFavorite = typeof favorites.$inferInsert;
