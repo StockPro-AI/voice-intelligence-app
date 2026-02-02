@@ -171,5 +171,25 @@
     "endpointPlaceholder": "e.g. http://localhost:1234",
     "apiKeyOptional": "API Key (optional)",
     "localServiceNote": "Leave empty for local services"
+  },
+  "favorites": {
+    "title": "Favorites",
+    "add": "Add Favorite",
+    "added": "Favorite saved",
+    "addError": "Error saving favorite",
+    "removed": "Favorite deleted",
+    "removeError": "Error deleting favorite",
+    "updated": "Favorite updated",
+    "updateError": "Error updating favorite",
+    "empty": "No favorites saved",
+    "namePlaceholder": "Enter name",
+    "nameRequired": "Name is required",
+    "applied": "Favorite applied"
+  },
+  "enrichment": {
+    "summary": "Summary",
+    "structure": "Structure",
+    "format": "Format",
+    "context": "Context"
   }
 }

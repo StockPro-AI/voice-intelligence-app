@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronLeft, ChevronRight, Home, History, Settings, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from 'react-i18next';
 import { Link, useLocation } from 'wouter';
 import { cn } from '@/lib/utils';
+import { FavoritesPanel } from './FavoritesPanel';
 
 interface SidebarProps {
   isOpen?: boolean;
@@ -105,6 +106,13 @@ export function Sidebar({ isOpen: initialOpen = true, onToggle }: SidebarProps) 
             );
           })}
         </nav>
+
+        {/* Favorites Panel */}
+        {isOpen && (
+          <div className="px-2">
+            <FavoritesPanel />
+          </div>
+        )}
 
         {/* Footer */}
         <div className="border-t border-slate-700 p-2">

@@ -171,5 +171,25 @@
     "endpointPlaceholder": "z.B. http://localhost:1234",
     "apiKeyOptional": "API-Schlüssel (optional)",
     "localServiceNote": "Für lokale Services leer lassen"
+  },
+  "favorites": {
+    "title": "Favoriten",
+    "add": "Favorit hinzufügen",
+    "added": "Favorit gespeichert",
+    "addError": "Fehler beim Speichern des Favorits",
+    "removed": "Favorit gelöscht",
+    "removeError": "Fehler beim Löschen des Favorits",
+    "updated": "Favorit aktualisiert",
+    "updateError": "Fehler beim Aktualisieren des Favorits",
+    "empty": "Keine Favoriten gespeichert",
+    "namePlaceholder": "Name eingeben",
+    "nameRequired": "Name ist erforderlich",
+    "applied": "Favorit angewendet"
+  },
+  "enrichment": {
+    "summary": "Zusammenfassung",
+    "structure": "Struktur",
+    "format": "Format",
+    "context": "Kontext"
   }
 }
