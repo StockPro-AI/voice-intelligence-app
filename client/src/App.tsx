@@ -14,9 +14,9 @@ import { Sidebar } from "./components/Sidebar";
 
 function Router() {
   return (
-    <div className="flex">
+    <div className="flex flex-col md:flex-row min-h-screen">
       <Sidebar />
-      <div className="flex-1">
+      <div className="flex-1 w-full">
         <Switch>
           <Route path="/" component={Home} />
           <Route path="/settings" component={Settings} />

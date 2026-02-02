@@ -208,19 +208,19 @@ export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto space-y-6">
+    <div className="w-full max-w-2xl mx-auto space-y-4 sm:space-y-6 px-3 sm:px-0">
       {/* Recording Section */}
-      <Card className="p-8 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 border-0 shadow-lg">
-        <div className="flex flex-col items-center space-y-6">
+      <Card className="p-6 sm:p-8 bg-gradient-to-br from-slate-50 to-slate-100 dark:from-slate-900 dark:to-slate-800 border-0 shadow-lg">
+        <div className="flex flex-col items-center space-y-4 sm:space-y-6">
           {/* Mic Icon with Animation */}
           <div
-            className={`relative w-24 h-24 rounded-full flex items-center justify-center transition-all duration-300 ${
+            className={`relative w-20 sm:w-24 h-20 sm:h-24 rounded-full flex items-center justify-center transition-all duration-300 ${
               isRecording
                 ? 'bg-red-500 shadow-lg shadow-red-500/50 scale-110'
                 : 'bg-gradient-to-br from-blue-500 to-purple-600 shadow-lg'
             }`}
           >
-            <Mic className="w-12 h-12 text-white" />
+            <Mic className="w-10 sm:w-12 h-10 sm:h-12 text-white" />
             {isRecording && (
               <div className="absolute inset-0 rounded-full border-2 border-red-500 animate-pulse" />
             )}
@@ -228,24 +228,24 @@ export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
 
           {/* Duration Display */}
           <div className="text-center">
-            <p className="text-4xl font-bold text-slate-900 dark:text-white font-mono">
+            <p className="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white font-mono">
               {formatDuration(duration)}
             </p>
-            <p className="text-sm text-slate-600 dark:text-slate-400 mt-2">
+            <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 mt-2">
               {isRecording ? t('recorder.recording') : t('recorder.readyToRecord')}
             </p>
           </div>
 
           {/* Error Display */}
-          {error && <p className="text-sm text-red-600 dark:text-red-400">{error}</p>}
+          {error && <p className="text-xs sm:text-sm text-red-600 dark:text-red-400">{error}</p>}
 
           {/* Control Buttons */}
-          <div className="flex gap-4 pt-4">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 pt-4 w-full sm:w-auto">
             {!isRecording ? (
               <Button
                 onClick={handleStartRecording}
                 disabled={isTranscribing}
-                className="px-8 py-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-lg font-semibold transition-all"
+                className="w-full sm:w-auto px-6 sm:px-8 py-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white rounded-lg font-semibold transition-all text-sm sm:text-base"
               >
                 <Mic className="w-4 h-4 mr-2" />
                 {t('recorder.startRecording')}
@@ -255,7 +255,7 @@ export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
                 <Button
                   onClick={handleStopRecording}
                   disabled={isTranscribing}
-                  className="px-8 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold transition-all"
+                  className="w-full sm:w-auto px-6 sm:px-8 py-2 bg-red-500 hover:bg-red-600 text-white rounded-lg font-semibold transition-all text-sm sm:text-base"
                 >
                   <Square className="w-4 h-4 mr-2" />
                   {t('recorder.stop')}
@@ -263,7 +263,7 @@ export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
                 <Button
                   onClick={cancelRecording}
                   variant="outline"
-                  className="px-8 py-2"
+                  className="w-full sm:w-auto px-6 sm:px-8 py-2 text-sm sm:text-base"
                 >
                   {t('recorder.cancel')}
                 </Button>
@@ -283,13 +283,13 @@ export function VoiceRecorder({ onTranscriptionComplete }: VoiceRecorderProps) {
 
       {/* Transcription Display */}
       {transcription && (
-        <Card className="p-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
+        <Card className="p-4 sm:p-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">
           <div className="space-y-4">
             <div>
-              <h3 className="text-lg font-semibold text-slate-900 dark:text-white mb-2">
+              <h3 className="text-base sm:text-lg font-semibold text-slate-900 dark:text-white mb-2">
                 {t('recorder.transcription')}
               </h3>
-              <p className="text-slate-700 dark:text-slate-300 whitespace-pre-wrap break-words">
+              <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 whitespace-pre-wrap break-words">
                 {transcription}
               </p>
             </div>
