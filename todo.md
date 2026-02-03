@@ -293,3 +293,20 @@ External Services
 - [ ] Binaries hochladen
 - [ ] Release Notes schreiben
 - [ ] Download-Links bereitstellen
+
+
+## Phase 26: Offline-Mode & Fallback-Mechanismen
+- [x] API-Availability Checker mit Health-Checks
+- [x] Offline-Mode Detection und Status-UI
+- [x] Fallback zu lokalen Modellen (Ollama/LMStudio)
+- [x] Graceful Degradation für Transkription
+- [x] Lokales Caching für Transkripte
+- [x] Offline-Storage mit IndexedDB
+- [x] Error-Recovery und Retry-Logik
+- [x] Benutzer-Benachrichtigungen für Offline-Status
+- [x] Automatische Reconnection bei API-Wiederherstellung
+- [x] OfflineIndicator Komponente mit API-Status
+- [x] OfflineSync Komponente für Synchronisierung
+- [x] Health-Check Endpoints im Backend
+- [x] useOfflineMode Hook für Frontend-Integration
+- [x] Unit-Tests für alle Offline-Features

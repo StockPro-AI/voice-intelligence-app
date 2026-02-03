@@ -11,6 +11,8 @@ import APIManagerPage from "./pages/APIManager";
 import { I18nextProvider } from "react-i18next";
 import i18n from "./i18n/config";
 import { Sidebar } from "./components/Sidebar";
+import { OfflineIndicator } from "./components/OfflineIndicator";
+import { OfflineSync } from "./components/OfflineSync";
 
 function Router() {
   return (
@@ -38,6 +40,8 @@ function App() {
           <TooltipProvider>
             <Toaster />
             <Router />
+            <OfflineIndicator />
+            <OfflineSync />
           </TooltipProvider>
         </ThemeProvider>
       </I18nextProvider>

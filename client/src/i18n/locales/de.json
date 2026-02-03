@@ -191,5 +191,13 @@
     "structure": "Struktur",
     "format": "Format",
     "context": "Kontext"
+  },
+  "offline": {
+    "title": "Keine Internetverbindung",
+    "lastOnline": "Zuletzt online",
+    "description": "Die App funktioniert im Offline-Modus mit lokalen Modellen",
+    "localModelsAvailable": "Lokale Modelle verfügbar",
+    "syncPending": "Synchronisierung ausstehend",
+    "recordingsSaved": "Aufnahmen lokal gespeichert"
   }
 }
