@@ -10,6 +10,9 @@ fn greet(name: &str) -> String {
 
 #[tauri::command]
 fn register_hotkey(app_handle: tauri::AppHandle, hotkey: &str) -> Result<(), String> {
+    // First unregister any existing hotkey to avoid conflicts
+    let _ = app_handle.global_shortcut().unregister(hotkey);
+    
     let app_handle_clone = app_handle.clone();
     
     app_handle
@@ -18,13 +21,10 @@ fn register_hotkey(app_handle: tauri::AppHandle, hotkey: &str) -> Result<(), Str
             if let Some(window) = app_handle_clone.get_window("main") {
                 let _ = window.show();
                 let _ = window.set_focus();
+                // Emit event to frontend
+                let _ = window.emit("hotkey:activated", ());
             }
         })
-        .map_err(|e| e.to_string())?;
-
-    app_handle
-        .global_shortcut()
-        .register(hotkey, move |_| {})
         .map_err(|e| e.to_string())?;
 
     Ok(())
@@ -36,6 +36,15 @@ fn unregister_hotkey(app_handle: tauri::AppHandle, hotkey: &str) -> Result<(), S
         .global_shortcut()
         .unregister(hotkey)
         .map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+fn update_hotkey(app_handle: tauri::AppHandle, old_hotkey: &str, new_hotkey: &str) -> Result<(), String> {
+    // Unregister old hotkey
+    let _ = app_handle.global_shortcut().unregister(old_hotkey);
+    
+    // Register new hotkey
+    register_hotkey(app_handle, new_hotkey)
 }
 
 #[tauri::command]
@@ -134,6 +143,7 @@ fn main() {
             greet,
             register_hotkey,
             unregister_hotkey,
+            update_hotkey,
             toggle_window,
             minimize_window,
             show_window

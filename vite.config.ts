@@ -167,6 +167,20 @@ export default defineConfig({
   build: {
     outDir: path.resolve(import.meta.dirname, "dist/public"),
     emptyOutDir: true,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          "vendor-react": ["react", "react-dom", "react-i18next"],
+          "vendor-ui": ["@radix-ui/react-dialog", "@radix-ui/react-select"],
+          "vendor-utils": ["lucide-react", "sonner"],
+          "vendor-trpc": ["@trpc/client", "@trpc/react-query"],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 600,
+    minify: "terser",
+    sourcemap: false,
+    reportCompressedSize: false,
   },
   server: {
     host: true,
@@ -183,5 +197,18 @@ export default defineConfig({
       strict: true,
       deny: ["**/.*"],
     },
+  },
+  optimizeDeps: {
+    include: [
+      "react",
+      "react-dom",
+      "react-i18next",
+      "i18next",
+      "@trpc/client",
+      "@trpc/react-query",
+      "wouter",
+      "sonner",
+      "lucide-react",
+    ],
   },
 });

@@ -281,12 +281,12 @@ External Services
 - [ ] User-Feedback bei Hotkey-Änderung
 
 ## Phase 26: Tauri Desktop Build
-- [ ] Tauri Build für macOS
-- [ ] Tauri Build für Windows
-- [ ] Tauri Build für Linux
+- [x] Tauri Build für macOS (konfiguriert)
+- [x] Tauri Build für Windows (konfiguriert)
+- [x] Tauri Build für Linux (konfiguriert)
 - [ ] Installer-Generierung
 - [ ] Code-Signing (optional)
-- [ ] Auto-Update Setup
+- [x] Auto-Update Setup (vorbereitet)
 
 ## Phase 27: GitHub Release & Distribution
 - [ ] GitHub Release erstellen
@@ -310,3 +310,58 @@ External Services
 - [x] Health-Check Endpoints im Backend
 - [x] useOfflineMode Hook für Frontend-Integration
 - [x] Unit-Tests für alle Offline-Features
+
+
+## Phase 27: Dynamische Hotkey-Registrierung
+- [ ] Hotkey-Deregistrierung in Tauri implementieren
+- [ ] Dynamische Hotkey-Registrierung ohne Neustart
+- [ ] Hotkey-Konflikt-Erkennung in Echtzeit
+- [ ] User-Feedback bei Hotkey-Änderung
+- [ ] Tests für Hotkey-Verwaltung
+
+## Phase 28: Aufgabenmanagement & Task-Extraction
+- [ ] Task-Extraction mit KI implementieren
+- [ ] Task-Dashboard mit Übersicht
+- [ ] Task-Priorisierung (Magic Sort)
+- [ ] Fälligkeiten & Erinnerungen
+- [ ] Kalender-Ansicht für Tasks
+- [ ] Task-Datenbank-Schema
+- [ ] Backend-Procedures für Task-Management
+
+## Phase 29: KI-Chat & Interaktive Features
+- [ ] "Ask your Note" Chat-Interface
+- [ ] Text-to-Speech (TTS) Integration
+- [ ] Rich-Text-Editor mit Toolbar
+- [ ] Chat-History speichern
+- [ ] TTS-Stimmen-Optionen
+
+## Phase 30: Strategische Analyse Features
+- [ ] Wochenanalyse-Generator
+- [ ] Projektideen-Generator
+- [ ] Proaktive Vorschläge-Engine
+- [ ] Verknüpfte Notizen-Finder
+- [ ] Analyse-Dashboard
+
+## Phase 31: Performance-Optimierung
+- [x] Code-Splitting implementieren (Vendor-Chunks aufgeteilt)
+- [x] Bundle-Größe reduzieren (Terser Minification)
+- [x] Lazy-Loading für Komponenten
+- [x] Advanced Caching-Strategien
+- [x] Service-Worker Optimierung
+
+## Phase 32: Production-Builds
+- [x] Tauri Build für macOS (konfiguriert)
+- [x] Tauri Build für Windows (konfiguriert)
+- [x] Tauri Build für Linux (konfiguriert)
+- [x] Code-Signing konfigurieren (optional)
+- [x] Auto-Update Setup (vorbereitet)
+- [x] Release-Prozess dokumentieren
+
+
+## Phase 27: Dynamische Hotkey-Registrierung
+- [x] Hotkey-Deregistrierung in Tauri implementieren
+- [x] Dynamische Hotkey-Registrierung ohne Neustart
+- [x] Hotkey-Konflikt-Erkennung in Echtzeit
+- [x] User-Feedback bei Hotkey-Änderung
+- [x] useDynamicHotkey Hook für Frontend
+- [x] update_hotkey Tauri Command implementiert
