@@ -262,3 +262,34 @@ External Services
 - [x] Mobile-freundliche Forms
 - [x] Viewport Meta Tags
 - [x] Testing auf verschiedenen Geräten
+
+
+## Phase 24: Batch-Export & Multi-Select
+- [x] Multi-Select Funktionalität in History (useBatchExport Hook)
+- [x] Batch-Export für mehrere Aufnahmen (Markdown, JSON)
+- [x] Batch-Delete mit Bestätigung (Backend Procedure)
+- [x] Select-All / Deselect-All Buttons
+- [x] Bulk-Action Toolbar Komponente
+- [ ] Export als ZIP-Archiv (optional)
+- [ ] i18n für Batch-Actions
+
+## Phase 25: Real-time Hotkey-Updates
+- [ ] Hotkey-Änderungen ohne Neustart anwenden
+- [ ] Alte Hotkeys deregistrieren
+- [ ] Neue Hotkeys registrieren
+- [ ] Konflikt-Erkennung in Echtzeit
+- [ ] User-Feedback bei Hotkey-Änderung
+
+## Phase 26: Tauri Desktop Build
+- [ ] Tauri Build für macOS
+- [ ] Tauri Build für Windows
+- [ ] Tauri Build für Linux
+- [ ] Installer-Generierung
+- [ ] Code-Signing (optional)
+- [ ] Auto-Update Setup
+
+## Phase 27: GitHub Release & Distribution
+- [ ] GitHub Release erstellen
+- [ ] Binaries hochladen
+- [ ] Release Notes schreiben
+- [ ] Download-Links bereitstellen
