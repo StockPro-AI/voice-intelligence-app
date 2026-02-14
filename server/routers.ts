@@ -9,6 +9,7 @@ import { apiManagerRouter } from "./routers/apiManager";
 import { favoritesRouter } from "./routers/favorites";
 import { batchRouter } from "./routers/batch";
 import { healthRouter } from "./routers/health";
+import { tasksRouter } from "./routers/tasks";
 
 export const appRouter = router({
   // if you need to use socket.io, read and register route in server/_core/index.ts, all api should start with '/api/' so that the gateway can route correctly
@@ -20,6 +21,7 @@ export const appRouter = router({
   favorites: favoritesRouter,
   batch: batchRouter,
   health: healthRouter,
+  tasks: tasksRouter,
   auth: router({
     me: publicProcedure.query(opts => opts.ctx.user),
     logout: publicProcedure.mutation(({ ctx }) => {

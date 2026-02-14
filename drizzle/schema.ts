@@ -91,3 +91,54 @@ export const favorites = mysqlTable("favorites", {
 
 export type Favorite = typeof favorites.$inferSelect;
 export type InsertFavorite = typeof favorites.$inferInsert;
+
+// Task management for extracted tasks from recordings
+export const tasks = mysqlTable("tasks", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  recordingId: int("recordingId"), // Reference to recording that generated this task
+  title: varchar("title", { length: 255 }).notNull(),
+  description: text("description"),
+  priority: mysqlEnum("priority", ["low", "medium", "high", "critical"]).default("medium").notNull(),
+  status: mysqlEnum("status", ["todo", "in_progress", "done", "cancelled"]).default("todo").notNull(),
+  dueDate: timestamp("dueDate"),
+  completedAt: timestamp("completedAt"),
+  tags: varchar("tags", { length: 500 }), // JSON array as string
+  extractedFrom: text("extractedFrom"), // Original text that generated this task
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type Task = typeof tasks.$inferSelect;
+export type InsertTask = typeof tasks.$inferInsert;
+
+// Chat history for "Ask your Note" feature
+export const chatHistory = mysqlTable("chat_history", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  recordingId: int("recordingId"), // Reference to recording being discussed
+  role: mysqlEnum("role", ["user", "assistant"]).notNull(),
+  message: text("message").notNull(),
+  metadata: text("metadata"), // JSON for additional context
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+});
+
+export type ChatHistory = typeof chatHistory.$inferSelect;
+export type InsertChatHistory = typeof chatHistory.$inferInsert;
+
+// Weekly analysis results
+export const weeklyAnalysis = mysqlTable("weekly_analysis", {
+  id: int("id").autoincrement().primaryKey(),
+  userId: int("userId").notNull(),
+  weekStartDate: timestamp("weekStartDate").notNull(),
+  summary: text("summary").notNull(), // Main insights
+  topThemes: varchar("topThemes", { length: 500 }), // JSON array
+  projectIdeas: text("projectIdeas"), // Generated project ideas
+  recommendations: text("recommendations"), // Actionable recommendations
+  recordingCount: int("recordingCount").default(0).notNull(),
+  createdAt: timestamp("createdAt").defaultNow().notNull(),
+  updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
+});
+
+export type WeeklyAnalysis = typeof weeklyAnalysis.$inferSelect;
+export type InsertWeeklyAnalysis = typeof weeklyAnalysis.$inferInsert;

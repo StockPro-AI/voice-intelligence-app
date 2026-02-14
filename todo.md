@@ -320,13 +320,13 @@ External Services
 - [ ] Tests für Hotkey-Verwaltung
 
 ## Phase 28: Aufgabenmanagement & Task-Extraction
-- [ ] Task-Extraction mit KI implementieren
-- [ ] Task-Dashboard mit Übersicht
-- [ ] Task-Priorisierung (Magic Sort)
-- [ ] Fälligkeiten & Erinnerungen
-- [ ] Kalender-Ansicht für Tasks
-- [ ] Task-Datenbank-Schema
-- [ ] Backend-Procedures für Task-Management
+- [x] Task-Extraction mit KI implementieren
+- [x] Task-Dashboard mit Übersicht
+- [x] Task-Priorisierung (Magic Sort)
+- [x] Fälligkeiten - [ ] Fälligkeiten & Erinnerungen Erinnerungen
+- [x] Kalender-Ansicht für Tasks
+- [x] Task-Datenbank-Schema
+- [x] Backend-Procedures für Task-Management
 
 ## Phase 29: KI-Chat & Interaktive Features
 - [ ] "Ask your Note" Chat-Interface
