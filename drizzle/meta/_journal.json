@@ -1,0 +1,41 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1769917334718,
+      "tag": "0000_dear_talon",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1769918344604,
+      "tag": "0001_polite_mongoose",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1769919016654,
+      "tag": "0002_skinny_mariko_yashida",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1770049237190,
+      "tag": "0003_short_viper",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1771096550384,
+      "tag": "0004_chilly_rockslide",
+      "breakpoints": true
+    }
+  ]
+}

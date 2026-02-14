@@ -1,0 +1,110 @@
+name: Build Desktop Releases
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            target: x86_64-unknown-linux-gnu
+            artifact_name: voice-intelligence
+            asset_name: Voice-Intelligence-linux-x86_64
+          - os: windows-latest
+            target: x86_64-pc-windows-msvc
+            artifact_name: Voice Intelligence.exe
+            asset_name: Voice-Intelligence-windows-x86_64
+          - os: macos-latest
+            target: universal-apple-darwin
+            artifact_name: Voice Intelligence.app
+            asset_name: Voice-Intelligence-macos-universal
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 10
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: ${{ matrix.target }}
+
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgtk-3-dev libwebkit2gtk-4.0-dev libappindicator3-dev librsvg2-dev patchelf
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build frontend
+        run: pnpm build
+
+      - name: Build Tauri app
+        run: pnpm tauri build -- --target ${{ matrix.target }}
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.asset_name }}
+          path: src-tauri/target/release/bundle/
+
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v1
+        with:
+          files: src-tauri/target/release/bundle/**/*
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  create-release:
+    needs: build
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+
+      - name: Create Release Notes
+        run: |
+          echo "# Release ${{ github.ref_name }}" > RELEASE_NOTES.md
+          echo "" >> RELEASE_NOTES.md
+          echo "## Downloads" >> RELEASE_NOTES.md
+          echo "" >> RELEASE_NOTES.md
+          echo "### macOS" >> RELEASE_NOTES.md
+          echo "- [DMG Installer](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/Voice-Intelligence-macos-universal.dmg)" >> RELEASE_NOTES.md
+          echo "" >> RELEASE_NOTES.md
+          echo "### Windows" >> RELEASE_NOTES.md
+          echo "- [MSI Installer](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/Voice-Intelligence-windows-x86_64.msi)" >> RELEASE_NOTES.md
+          echo "" >> RELEASE_NOTES.md
+          echo "### Linux" >> RELEASE_NOTES.md
+          echo "- [AppImage](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/Voice-Intelligence-linux-x86_64.AppImage)" >> RELEASE_NOTES.md
+          echo "- [DEB Package](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/Voice-Intelligence-linux-x86_64.deb)" >> RELEASE_NOTES.md
+
+      - name: Update Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: RELEASE_NOTES.md
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
