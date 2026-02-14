@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Home, History, Settings, Zap, Menu, X } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Home, History, Settings, Zap, Menu, X, TrendingUp } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'wouter';
@@ -49,6 +49,12 @@ export function Sidebar({ isOpen: initialOpen = true, onToggle }: SidebarProps) 
       label: 'API Manager',
       icon: Zap,
       active: location === '/api-manager',
+    },
+    {
+      href: '/analytics',
+      label: t('analytics.title'),
+      icon: TrendingUp,
+      active: location === '/analytics',
     },
     {
       href: '/settings',

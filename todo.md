@@ -336,11 +336,11 @@ External Services
 - [ ] TTS-Stimmen-Optionen
 
 ## Phase 30: Strategische Analyse Features
-- [ ] Wochenanalyse-Generator
-- [ ] Projektideen-Generator
-- [ ] Proaktive Vorschläge-Engine
-- [ ] Verknüpfte Notizen-Finder
-- [ ] Analyse-Dashboard
+- [x] Wochenanalyse-Generator
+- [x] Projektideen-Generator
+- [x] Proaktive Vorschläge-Engine
+- [x] Verknüpfte Notizen-Finder
+- [x] Analyse-Dashboard
 
 ## Phase 31: Performance-Optimierung
 - [x] Code-Splitting implementieren (Vendor-Chunks aufgeteilt)
@@ -365,3 +365,32 @@ External Services
 - [x] User-Feedback bei Hotkey-Änderung
 - [x] useDynamicHotkey Hook für Frontend
 - [x] update_hotkey Tauri Command implementiert
+
+
+## Phase 33: Wochenanalyse & Projektideen-Generator
+
+### Wochenanalyse Backend
+- [ ] Trend-Erkennung für Produktivität
+- [ ] Pattern-Analyse in Notizen
+- [ ] Zeitausgaben pro Kategorie berechnen
+- [ ] Häufigste Themen identifizieren
+- [ ] Wochenanalyse-Procedures (getTrendData, analyzeWeek)
+
+### Projektideen-Generator
+- [ ] KI-basierte Projektideen-Generierung
+- [ ] Ideen aus Notizen extrahieren
+- [ ] Machbarkeits-Bewertung
+- [ ] Priorisierung von Projektideen
+- [ ] Verknüpfung mit existierenden Tasks
+
+### Frontend-Dashboard
+- [ ] Wochenanalyse-Seite mit Trends
+- [ ] Produktivitäts-Grafiken
+- [ ] Kategorien-Breakdown
+- [ ] Projektideen-Vorschläge anzeigen
+- [ ] Trend-Vergleich (Woche-zu-Woche)
+
+### Testing & Integration
+- [ ] Unit-Tests für Trend-Erkennung
+- [ ] Integration-Tests für Analyse-Pipeline
+- [ ] Mock-Daten für Wochenanalyse

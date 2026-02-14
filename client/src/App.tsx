@@ -13,6 +13,7 @@ import i18n from "./i18n/config";
 import { Sidebar } from "./components/Sidebar";
 import { OfflineIndicator } from "./components/OfflineIndicator";
 import { OfflineSync } from "./components/OfflineSync";
+import { Analytics } from "./pages/Analytics";
 
 function Router() {
   return (
@@ -24,6 +25,7 @@ function Router() {
           <Route path="/settings" component={Settings} />
           <Route path="/history" component={History} />
           <Route path="/api-manager" component={APIManagerPage} />
+          <Route path="/analytics" component={Analytics} />
           <Route path="/404" component={NotFound} />
           <Route component={NotFound} />
         </Switch>
