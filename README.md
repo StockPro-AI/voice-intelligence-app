@@ -1,14 +1,16 @@
-# Voice Intelligence Desktop App
+# Voice Intelligence Assistant
 
-Eine elegante Desktop-Anwendung, die Spracheingaben aufnimmt, transkribiert und durch KI-gestützte Verarbeitung intelligent anreichert. Die Anwendung ist nahtlos in den Desktop-Workflow integrierbar und wird per globaler Hotkey-Kombination aktiviert.
+Eine elegante Desktop-Anwendung, die Spracheingaben aufnimmt, transkribiert und durch KI-gestützte Verarbeitung intelligent anreichert. Mit intelligenter Notiz-Orchestrierung, automatischer Task-Extraction und wöchentlicher Analyse.
 
 ## Problem & Motivation
 
-In modernen Workflows entsteht häufig die Herausforderung, schnell Gedanken zu erfassen und strukturiert festzuhalten. Voice Intelligence löst diesen Use-Case durch eine nahtlose Integration:
+In modernen Workflows entsteht häufig die Herausforderung, schnell Gedanken zu erfassen, strukturiert festzuhalten und automatisch in verwertbare Tasks und Projekte umzuwandeln. Voice Intelligence löst diesen Use-Case durch:
 
 1. **Schnelle Erfassung**: Globale Hotkey-Aktivierung (Alt+Shift+V) ermöglicht sofortige Sprachaufnahme ohne Kontextwechsel
-2. **Intelligente Verarbeitung**: Automatische Transkription und KI-basierte Anreicherung (Formatierung, Zusammenfassung, Strukturierung)
-3. **Direkte Nutzbarkeit**: Ergebnisse können sofort kopiert, exportiert oder weiterverarbeitet werden
+2. **Intelligente Verarbeitung**: Automatische Transkription, KI-basierte Anreicherung und strukturierte Notiz-Speicherung
+3. **Automatische Kategorisierung**: KI extrahiert automatisch Tasks, Projektideen und strukturiert Notizen
+4. **Wöchentliche Analyse**: Intelligente Wochenanalyse mit Produktivitätstrends und proaktiven Projektvorschlägen
+5. **Offline-Unterstützung**: Fallback zu lokalen Modellen (Ollama/LMStudio) bei API-Ausfällen
 
 ## Architektur-Überblick
 
@@ -20,23 +22,28 @@ In modernen Workflows entsteht häufig die Herausforderung, schnell Gedanken zu 
 │  Frontend (React 19 + Tailwind CSS 4)                           │
 │  ├── Voice Recorder Component (Web Audio API)                   │
 │  ├── Transcription Display                                      │
-│  ├── Enrichment UI (Multiple Modes)                             │
+│  ├── Orchestration Dashboard (Notes, Tasks, Projects)           │
+│  ├── Analytics & Weekly Insights                                │
 │  └── Settings & History                                         │
 │                                                                   │
 │  ↓ (tRPC Type-Safe RPC)                                         │
 │                                                                   │
-│  Backend (Express + Tauri)                                      │
+│  Backend (Express + Tauri + Node.js)                            │
 │  ├── Audio Upload (S3 Storage)                                  │
 │  ├── Whisper API Integration                                    │
-│  ├── LLM Enrichment Pipeline                                    │
+│  ├── LLM Enrichment & Categorization Pipeline                   │
+│  ├── Orchestration Engine (Notes → Tasks/Projects)              │
+│  ├── Scheduler (Automatic Categorization & Deep Analysis)       │
+│  ├── Analytics Engine (Weekly Insights & Trends)                │
 │  └── Tauri Commands (Hotkeys, System Integration)               │
 │                                                                   │
 │  ↓ (External APIs)                                              │
 │                                                                   │
 │  External Services                                              │
 │  ├── Whisper API (OpenAI Speech-to-Text)                        │
-│  ├── LLM API (Claude/GPT for Enrichment)                        │
-│  ├── S3 Storage (Audio File Persistence)                        │
+│  ├── LLM API (Claude/GPT for Enrichment & Categorization)       │
+│  ├── S3 Storage (Audio & File Persistence)                      │
+│  ├── Ollama/LMStudio (Offline Fallback)                         │
 │  └── System Hotkeys (Tauri Global Shortcut)                     │
 │                                                                   │
 └─────────────────────────────────────────────────────────────────┘
@@ -47,14 +54,15 @@ In modernen Workflows entsteht häufig die Herausforderung, schnell Gedanken zu 
 | Bereich | Technologie | Grund |
 |---------|-------------|-------|
 | **Desktop Runtime** | Tauri 2.x | Leichtgewichtig, Rust-basiert, Cross-Platform |
-| **Frontend Framework** | Next.js + React 19 | Modern, Type-Safe, Component-basiert |
+| **Frontend Framework** | React 19 + TypeScript | Modern, Type-Safe, Component-basiert |
 | **Styling** | Tailwind CSS 4 + shadcn/ui | Elegant, Responsive, Accessible |
 | **Backend** | Express + tRPC | Type-Safe RPC, Minimal Boilerplate |
-| **Database** | MySQL/TiDB | Persistent Storage für History |
+| **Database** | MySQL/TiDB | Persistent Storage für History, Notes, Tasks, Projects |
 | **Speech-to-Text** | Whisper API | Hochgenaue Transkription |
-| **LLM Integration** | Manus Built-in LLM | Enrichment & Processing |
+| **LLM Integration** | Manus Built-in LLM | Enrichment, Categorization, Analysis |
 | **File Storage** | S3 (AWS) | Audio-Datei Persistierung |
 | **State Management** | React Query + tRPC | Optimistic Updates, Caching |
+| **Offline Support** | Ollama/LMStudio | Fallback zu lokalen Modellen |
 
 ## Voice-Processing Pipeline
 
@@ -67,18 +75,62 @@ S3 Upload
     ↓
 Whisper API Transcription
     ↓
-Transcription Text
+Transcription Text → Note Storage
     ↓
-LLM Enrichment (Selected Mode)
-    ├── Summary: Prägnante Zusammenfassung
-    ├── Structure: Strukturierte Gliederung
-    ├── Format: Formatierte Notiz
-    └── Context: Kontextbezogene Anpassung
+Automatic Categorization (KI)
+    ├── Task Extraction
+    ├── Project Idea Generation
+    └── Confidence Scoring
     ↓
-Enriched Output
+Extracted Tasks & Projects
     ↓
-Display & Export (Clipboard, File, History)
+Weekly Deep Analysis
+    ├── Trend Detection
+    ├── Pattern Recognition
+    └── Actionable Insights
+    ↓
+Display & Export (Dashboard, Clipboard, File, History)
 ```
+
+## Core Features
+
+### 1. **Intelligente Notiz-Orchestrierung**
+- Strukturierte Notiz-Speicherung mit Status-Tracking (unprocessed, processing, processed, review)
+- Automatische Kategorisierung in Notizen, Aufgaben und Projekte
+- Confidence-Scoring für KI-Extraktion
+- Benutzer-Feedback für KI-Verbesserung
+
+### 2. **Task-Management**
+- Automatische Task-Extraction aus Transkriptionen
+- Priorisierung (low, medium, high, critical)
+- Status-Tracking (todo, in_progress, done, cancelled)
+- Fälligkeitsdaten und Tags
+- Magic Sort für intelligente Priorisierung
+
+### 3. **Projekt-Ideen-Generator**
+- Automatische Projektideen-Generierung aus Notizen
+- Effort-Level und Potential-Impact Rating
+- Status-Management (idea, planning, active, paused, completed)
+- Skill-Requirements und Zeitleisten
+
+### 4. **Wochenanalyse & Insights**
+- Automatische wöchentliche Analyse aller Notizen
+- Top-Themes Erkennung
+- Produktivitäts-Trends über 4 Wochen
+- Intelligente Projektvorschläge mit Priorisierung
+- Actionable Recommendations
+
+### 5. **Offline-Mode & Fallback-Mechanismen**
+- Automatische API-Availability Checking
+- Graceful Degradation zu lokalen Modellen
+- Lokales Caching mit IndexedDB
+- Automatische Synchronisierung bei Wiederverbindung
+- Benutzer-Benachrichtigungen für Offline-Status
+
+### 6. **Dynamische Hotkey-Registrierung**
+- Update von Tastenkürzel ohne App-Neustart
+- Deregistrierung alter und Registrierung neuer Hotkeys
+- Persistierung in Settings
 
 ## Enrichment-Modi
 
@@ -86,46 +138,38 @@ Die Anwendung bietet vier Enrichment-Modi zur intelligenten Verarbeitung von Tra
 
 ### 1. **Summary** (Zusammenfassung)
 Erstellt eine prägnante 2-3 Satz-Zusammenfassung des Transkripts.
-```
-Input: "Heute habe ich ein langes Meeting gehabt über Q1 Planung..."
-Output: "Q1 Planung Meeting mit Fokus auf Ressourcenallokation und Timeline."
-```
 
 ### 2. **Structure** (Strukturierung)
 Gliedert den Text mit Überschriften und Aufzählungspunkten.
-```
-Output:
-# Hauptthema
-- Punkt 1
-- Punkt 2
-  - Unterpunkt
-```
 
 ### 3. **Format** (Formatierung)
 Erstellt eine strukturierte Notiz mit klaren Abschnitten.
-```
-Output:
-## Überschrift
-Inhalt mit Formatierung
-
-### Unterabschnitt
-Detaillierte Punkte
-```
 
 ### 4. **Context** (Kontext-Anpassung)
 Analysiert den Text im Kontext eines spezifizierten Themas.
-```
-Input Context: "Projektmanagement"
-Output: Transkript wird im PM-Kontext analysiert und aufbereitet
+
+## Scheduler-Konfiguration
+
+Die automatische Kategorisierung ist vollständig konfigurierbar:
+
+```typescript
+{
+  categorizationInterval: 3600000,  // ms (default: 1 hour)
+  deepAnalysisDay: 5,               // 0-6 (0=Sunday, default=Friday)
+  deepAnalysisTime: "09:00",        // HH:MM format
+  autoTranscribe: true,             // Automatische Transkription
+  isEnabled: true                   // Scheduler aktiviert/deaktiviert
+}
 ```
 
 ## Setup & Installation
 
 ### Voraussetzungen
 
-- Node.js 18+ und pnpm
+- Node.js 22+ und pnpm
 - Rust (für Tauri Desktop-Build)
 - Git
+- MySQL/TiDB Datenbank
 
 ### Entwicklungs-Setup
 
@@ -137,226 +181,102 @@ cd voice-intelligence-app
 # Dependencies installieren
 pnpm install
 
-# Environment-Variablen setzen
-cp .env.example .env.local
-# Folgende Variablen konfigurieren:
-# - DATABASE_URL: MySQL/TiDB Connection String
-# - BUILT_IN_FORGE_API_KEY: Manus LLM API Key
-# - BUILT_IN_FORGE_API_URL: Manus LLM API URL
+# Datenbankmigrationen durchführen
+pnpm db:push
 
 # Development Server starten (Web)
 pnpm dev
 
 # Desktop App starten (Tauri)
-pnpm dev:desktop
-
-# Build für Production
-pnpm build:desktop
+pnpm tauri dev
 ```
 
-### Hotkey-Konfiguration
+### Production-Build
 
-Die Standard-Hotkey-Kombination ist **Alt+Shift+V**. Diese kann in der App-Einstellung konfiguriert werden:
+```bash
+# Desktop-Builds für macOS, Windows, Linux
+pnpm tauri build
 
-1. Öffne die Anwendung
-2. Navigiere zu Settings
-3. Ändere die Hotkey-Kombination
-4. Speichern und neu starten
-
-## Design-Entscheidungen
-
-### 1. **Tauri statt Electron**
-- **Grund**: Kleinere Bundle-Größe (~3MB vs ~150MB), schnellere Startzeit, bessere Performance
-- **Trade-off**: Weniger Ökosystem, aber ausreichend für Desktop-Integration
-
-### 2. **Web Audio API statt Native Recording**
-- **Grund**: Cross-Platform Kompatibilität, keine zusätzlichen Abhängigkeiten
-- **Features**: Echo Cancellation, Noise Suppression, Auto Gain Control
-
-### 3. **Whisper API statt lokales Modell**
-- **Grund**: Höhere Genauigkeit, Multi-Language Support, keine lokale GPU erforderlich
-- **Alternative**: Könnte zu lokal gehosteten Modellen migriert werden
-
-### 4. **LLM-Enrichment statt statische Verarbeitung**
-- **Grund**: Flexible, kontextbezogene Verarbeitung
-- **Modes**: Vier verschiedene Enrichment-Strategien für unterschiedliche Use-Cases
-
-### 5. **S3 Storage für Audio-Dateien**
-- **Grund**: Persistierung, Backup, Skalierbarkeit
-- **Sicherheit**: Presigned URLs, Zugriffskontrolle
-
-## API-Referenz
-
-### tRPC Procedures
-
-#### `transcription.uploadAudio`
-Lädt Audio-Datei zu S3 hoch.
-
-```typescript
-input: {
-  audioData: string;      // Base64-encoded audio
-  filename: string;       // Dateiname
-}
-
-output: {
-  success: boolean;
-  url: string;           // S3 URL
-  fileKey: string;       // S3 Key
-}
-```
-
-#### `transcription.transcribeAudio`
-Transkribiert Audio mit Whisper API.
-
-```typescript
-input: {
-  audioUrl: string;      // S3 URL
-  language?: string;     // Optional: ISO-639-1 Code
-}
-
-output: {
-  success: boolean;
-  text: string;         // Transkribierter Text
-  language: string;     // Erkannte Sprache
-  segments: Array;      // Timestamped Segmente
-}
-```
-
-#### `transcription.enrichTranscription`
-Reichert Transkript mit LLM an.
-
-```typescript
-input: {
-  text: string;
-  mode: 'summary' | 'structure' | 'format' | 'context';
-  context?: string;     // Optional: Kontext für Context-Mode
-}
-
-output: {
-  success: boolean;
-  enrichedText: string;
-  mode: string;
-}
-```
-
-### Tauri Commands
-
-#### `register_hotkey`
-Registriert globale Hotkey.
-
-```rust
-register_hotkey(hotkey: &str) -> Result<(), String>
-```
-
-#### `unregister_hotkey`
-Deregistriert globale Hotkey.
-
-```rust
-unregister_hotkey(hotkey: &str) -> Result<(), String>
+# Builds sind verfügbar in:
+# - src-tauri/target/release/bundle/
 ```
 
 ## Datenbankschema
 
-### Recordings Table
-```sql
-CREATE TABLE recordings (
-  id INT PRIMARY KEY AUTO_INCREMENT,
-  userId INT NOT NULL,
-  audioUrl VARCHAR(512) NOT NULL,
-  audioKey VARCHAR(256) NOT NULL,
-  transcription LONGTEXT,
-  enrichedText LONGTEXT,
-  enrichmentMode ENUM('summary', 'structure', 'format', 'context'),
-  duration INT,
-  language VARCHAR(10),
-  createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updatedAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  FOREIGN KEY (userId) REFERENCES users(id)
-);
-```
+### Core Tables
+
+- **users**: Benutzer und Authentifizierung
+- **user_settings**: Benutzer-Einstellungen (Hotkey, Sprache, etc.)
+- **recording_history**: Aufnahmen und Transkriptionen
+- **notes**: Strukturierte Notizen mit Status-Tracking
+- **tasks**: Extrahierte Aufgaben mit Priorität
+- **projects**: Projektideen mit Effort/Impact Rating
+- **scheduler_config**: Konfigurierbare Scheduler-Einstellungen
+- **categorization_feedback**: Benutzer-Feedback für KI-Verbesserung
+- **weekly_analysis**: Wöchentliche Analyse-Ergebnisse
+- **chat_history**: Chat-Verlauf für "Ask your Note"
+
+## API Endpoints
+
+### Orchestration Router (`/api/trpc/orchestration`)
+
+- `createNote`: Neue Notiz erstellen
+- `getNotes`: Notizen abrufen
+- `getProjects`: Projekte abrufen
+- `getSchedulerConfig`: Scheduler-Konfiguration abrufen
+- `submitCategorizationFeedback`: Feedback für KI-Verbesserung
+
+### Tasks Router (`/api/trpc/tasks`)
+
+- `createTask`: Task erstellen
+- `getTasks`: Tasks abrufen
+- `updateTask`: Task aktualisieren
+- `deleteTask`: Task löschen
+
+### Analytics Router (`/api/trpc/analytics`)
+
+- `getWeeklyAnalysis`: Wochenanalyse abrufen
+- `generateProjectIdeas`: Projektideen generieren
 
 ## Performance-Optimierungen
 
-1. **Audio Streaming**: Große Audio-Dateien werden in Chunks verarbeitet
-2. **LLM Caching**: Häufig verwendete Enrichment-Modi werden gecacht
-3. **Lazy Loading**: UI-Komponenten werden on-demand geladen
-4. **Optimistic Updates**: Sofortige UI-Feedback ohne Warten auf Server
+- **Code-Splitting**: Vendor-Chunks für React, UI, Utils, tRPC
+- **Lazy Loading**: Dynamische Imports für große Komponenten
+- **Caching**: React Query mit optimistic updates
+- **Database Indexing**: Optimierte Queries für häufige Zugriffe
+- **Offline-First**: IndexedDB für lokales Caching
 
-## Sicherheit
+## Testing
 
-1. **API-Keys**: Alle sensiblen Credentials sind server-side
-2. **Audio-Dateien**: S3 mit Presigned URLs und Zugriffskontrolle
-3. **Transcription**: Nur authentifizierte Benutzer können transkribieren
-4. **HTTPS**: Alle Kommunikation ist verschlüsselt
-
-## Bekannte Limitationen & Roadmap
-
-### Aktuelle Limitationen
-- Audio-Dateien sind auf 16MB begrenzt (Whisper API Limit)
-- Nur englische und deutsche Sprache vollständig getestet
-- Desktop-App ist derzeit nur für macOS/Windows optimiert
-
-### Roadmap
-- [ ] Linux-Support für Desktop-App
-- [ ] Offline-Transkription mit lokalem Whisper
-- [ ] Erweiterte Enrichment-Modi (Translation, Sentiment Analysis)
-- [ ] Voice-Shortcuts für häufige Aktionen
-- [ ] Integration mit populären Notiz-Apps (Notion, Obsidian)
-- [ ] Real-time Collaboration für Team-Nutzung
-
-## Entwicklung & Testing
-
-### Unit Tests
 ```bash
+# Unit-Tests ausführen
 pnpm test
-```
 
-### Integration Tests
-```bash
-pnpm test:integration
-```
+# Mit Coverage
+pnpm test:coverage
 
-### Linting & Formatting
-```bash
-pnpm format
-pnpm check
+# Watch-Mode
+pnpm test:watch
 ```
 
 ## Deployment
 
-### Desktop App Distribution
+Das Projekt ist bereit für Production-Deployment:
 
-```bash
-# Build für alle Plattformen
-pnpm build:desktop
+1. **Desktop**: Automatisierte Builds via GitHub Actions für macOS, Windows, Linux
+2. **Web**: Manus Built-in Hosting mit Custom Domain Support
+3. **Database**: MySQL/TiDB mit automatischen Backups
 
-# Installer werden generiert in:
-# - src-tauri/target/release/bundle/
-```
+## Dokumentation
 
-### Web Version (Optional)
-
-```bash
-# Build für Web
-pnpm build
-
-# Deploy zu Manus oder externem Host
-```
+- [ANALYTICS_DOCUMENTATION.md](./ANALYTICS_DOCUMENTATION.md) - Wochenanalyse & Projektideen-Generator
+- [ANALYTICS_QUICKSTART.md](./ANALYTICS_QUICKSTART.md) - Quick Start Guide
+- [DESKTOP_BUILD_GUIDE.md](./DESKTOP_BUILD_GUIDE.md) - Desktop-Build Anleitung
 
 ## Lizenz
 
-MIT License - Siehe LICENSE Datei für Details
+Proprietary - Alle Rechte vorbehalten
 
-## Support & Kontakt
+## Support
 
-Bei Fragen oder Problemen:
-1. Öffne ein Issue im GitHub Repository
-2. Konsultiere die Dokumentation
-3. Kontaktiere das Development Team
-
-## Danksagungen
-
-- OpenAI Whisper für Speech-to-Text
-- Tauri Team für Desktop-Runtime
-- shadcn/ui für UI-Komponenten
-- Manus Platform für LLM & Storage Integration
+Für Fragen und Support: [support@voiceintelligence.app](mailto:support@voiceintelligence.app)

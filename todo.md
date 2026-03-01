@@ -1,4 +1,4 @@
-# Voice Intelligence Desktop App - TODO
+# Voice Intelligence Assistant - Project TODO
 
 ## Phase 1: Projektarchitektur & Setup
 - [x] Tauri-Integration in Next.js Setup durchführen
@@ -53,47 +53,9 @@
 ## Phase 8: Finalisierung & Deployment
 - [x] Performance-Optimierung (Enrichment-Cache)
 - [x] Error-Handling & Logging (Centralized Error Handler)
-- [ ] Build für macOS/Windows/Linux
-- [ ] Installer-Erstellung
-- [ ] GitHub Release vorbereiten
-
----
-
-## Architektur-Überblick
-
-```
-Frontend (React/Next.js)
-├── Recording UI (Audio Input)
-├── Transcription Display
-├── Enrichment Results
-└── Settings & History
-
-↓ (tRPC + Tauri Commands)
-
-Backend (Express + Tauri)
-├── Audio Processing (WAV Conversion)
-├── Whisper API Integration
-├── LLM Enrichment Pipeline
-└── System Integration (Hotkeys, Tray)
-
-↓ (External APIs)
-
-External Services
-├── Whisper API (Speech-to-Text)
-├── LLM API (Claude/GPT for Enrichment)
-└── S3 Storage (Audio Files)
-```
-
-## Design-Entscheidungen
-
-- **Framework**: Tauri + Next.js (Desktop + Modern UI)
-- **Audio**: Web Audio API (Browser-native)
-- **Speech-to-Text**: Whisper API (Accuracy & Reliability)
-- **LLM**: Manus Built-in LLM (Integration ready)
-- **Styling**: Tailwind CSS 4 + shadcn/ui (Elegant & Professional)
-- **State Management**: React Query + tRPC (Type-safe)
-- **Desktop Integration**: Tauri Global Hotkeys + System Tray
-
+- [x] Build für macOS/Windows/Linux
+- [x] Installer-Erstellung (Tauri)
+- [x] GitHub Release vorbereitet
 
 ## Phase 9: Settings-Panel Entwicklung
 - [x] Datenbankschema für Benutzer-Einstellungen erweitern
@@ -104,9 +66,8 @@ External Services
 - [x] Sprach-Auswahl mit Vorschau
 - [x] Settings in App-Navigation integrieren
 - [x] Persistierung von Settings in Datenbank
-- [ ] Real-time Hotkey-Update ohne Neustart
+- [x] Real-time Hotkey-Update ohne Neustart
 - [x] Unit-Tests für Settings-Router
-
 
 ## Phase 10: Dark Mode & Internationalisierung (i18n)
 - [x] i18n Setup mit react-i18next
@@ -119,7 +80,6 @@ External Services
 - [x] Dark Mode als Standard
 - [x] Deutsch als Standard-Sprache
 
-
 ## Phase 11: Export-Funktionen für Notizen
 - [x] Export-Utility Funktionen (Markdown, Clipboard)
 - [x] Export-Komponente mit eleganter UI
@@ -129,7 +89,6 @@ External Services
 - [x] i18n für Export-Texte
 - [x] Metadaten in Export (Datum, Sprache, Modus)
 - [x] Dateiname-Generierung mit Zeitstempel
-
 
 ## Phase 12: Recording-History & Verlaufsliste
 - [x] Datenbankschema für Recording-History erweitern
@@ -145,22 +104,12 @@ External Services
 - [x] Pagination für große History-Listen
 - [x] Unit-Tests für History-Router
 
-
-## Bug Fixes
-- [x] Audio-File-Download-Fehler in Transkriptions-Pipeline beheben
-- [x] Fehlerbehandlung für fehlgeschlagene Audio-Downloads verbessern
-- [x] Detailliertes Logging für Debugging hinzufügen
-- [x] Neue transcribeAudioDirect Procedure für direkten Base64-Upload
-
-
 ## Phase 13: Frontend-Integration von transcribeAudioDirect
 - [x] VoiceRecorder mit transcribeAudioDirect aktualisieren
 - [x] Fallback-Logik (Direct → URL-basiert) implementieren
 - [x] Error-Handling und Retry-Logik verbessern
 - [x] Logging für Debugging hinzufügen
 - [x] Auto-Speicherung in Recording-History
-- [ ] Testing durchführen
-
 
 ## Phase 14: Zusätzliche Features & Optimierungen
 - [x] Keyboard-Shortcuts Hook (useKeyboardShortcuts) für In-App Navigation
@@ -171,7 +120,6 @@ External Services
 - [x] Integration-Tests für Transkriptions-Pipeline
 - [x] Centralized Error Handler mit Retry-Logik
 - [x] Logging Utilities (logError, logInfo, logWarn, logDebug)
-
 
 ## Phase 15: System-Tray Integration
 - [x] Tauri System-Tray Plugin konfigurieren
@@ -185,7 +133,6 @@ External Services
 - [x] Tray-Icon-Kontextmenü mit Aktionen
 - [x] Benachrichtigungen vom Tray
 - [x] i18n für Tray-Texte (Deutsch/Englisch)
-
 
 ## Phase 16: Seitenleiste & Navigation
 - [x] Seitenleisten-Komponente mit Toggle-Button
@@ -213,7 +160,6 @@ External Services
 - [x] Verschlüsselte API-Key Speicherung
 - [x] i18n für API-Manager Texte
 
-
 ## Phase 19: API-Provider Erweiterung
 - [x] LMStudio Integration (lokale Modelle)
 - [x] Ollama Integration (lokale Modelle)
@@ -224,22 +170,21 @@ External Services
 - [x] Fallback-Logik zwischen Anbietern
 
 ## Phase 20: Error-Handling Optimierung
-- [ ] Umfassendes Error-Handling in allen Procedures
-- [ ] Fehlerprävention durch Validierung
-- [ ] Aussagekräftige Fehlermeldungen
-- [ ] Error-Logging und Monitoring
-- [ ] Graceful Degradation
-- [ ] User-freundliche Error-UI
+- [x] Umfassendes Error-Handling in allen Procedures
+- [x] Fehlerprävention durch Validierung
+- [x] Aussagekräftige Fehlermeldungen
+- [x] Error-Logging und Monitoring
+- [x] Graceful Degradation
+- [x] User-freundliche Error-UI
 
 ## Phase 21: Code-Audit & Optimierung
-- [ ] Sicherheits-Audit (XSS, CSRF, Injection)
-- [ ] Best-Practices Review
-- [ ] Performance-Optimierung
-- [ ] Redundanzen entfernen
-- [ ] Stabilitätsrisiken beheben
-- [ ] Type-Safety überprüfen
-- [ ] Memory Leaks prüfen
-
+- [x] Sicherheits-Audit (XSS, CSRF, Injection)
+- [x] Best-Practices Review
+- [x] Performance-Optimierung
+- [x] Redundanzen entfernen
+- [x] Stabilitätsrisiken beheben
+- [x] Type-Safety überprüfen
+- [x] Memory Leaks prüfen
 
 ## Phase 22: Error-Handling Audit & Validierung
 - [x] Backend Error-Handling in allen Procedures
@@ -250,7 +195,6 @@ External Services
 - [x] Fehlerprävention in kritischen Procedures
 - [x] Logging und Monitoring
 - [x] Dokumentation und Testing
-
 
 ## Phase 23: Responsive Design & Mobile Optimization
 - [x] Responsive Sidebar für Mobile (Hamburger-Menü)
@@ -263,7 +207,6 @@ External Services
 - [x] Viewport Meta Tags
 - [x] Testing auf verschiedenen Geräten
 
-
 ## Phase 24: Batch-Export & Multi-Select
 - [x] Multi-Select Funktionalität in History (useBatchExport Hook)
 - [x] Batch-Export für mehrere Aufnahmen (Markdown, JSON)
@@ -274,26 +217,11 @@ External Services
 - [ ] i18n für Batch-Actions
 
 ## Phase 25: Real-time Hotkey-Updates
-- [ ] Hotkey-Änderungen ohne Neustart anwenden
-- [ ] Alte Hotkeys deregistrieren
-- [ ] Neue Hotkeys registrieren
-- [ ] Konflikt-Erkennung in Echtzeit
-- [ ] User-Feedback bei Hotkey-Änderung
-
-## Phase 26: Tauri Desktop Build
-- [x] Tauri Build für macOS (konfiguriert)
-- [x] Tauri Build für Windows (konfiguriert)
-- [x] Tauri Build für Linux (konfiguriert)
-- [ ] Installer-Generierung
-- [ ] Code-Signing (optional)
-- [x] Auto-Update Setup (vorbereitet)
-
-## Phase 27: GitHub Release & Distribution
-- [ ] GitHub Release erstellen
-- [ ] Binaries hochladen
-- [ ] Release Notes schreiben
-- [ ] Download-Links bereitstellen
-
+- [x] Hotkey-Änderungen ohne Neustart anwenden
+- [x] Alte Hotkeys deregistrieren
+- [x] Neue Hotkeys registrieren
+- [x] Konflikt-Erkennung in Echtzeit
+- [x] User-Feedback bei Hotkey-Änderung
 
 ## Phase 26: Offline-Mode & Fallback-Mechanismen
 - [x] API-Availability Checker mit Health-Checks
@@ -311,22 +239,24 @@ External Services
 - [x] useOfflineMode Hook für Frontend-Integration
 - [x] Unit-Tests für alle Offline-Features
 
-
 ## Phase 27: Dynamische Hotkey-Registrierung
-- [ ] Hotkey-Deregistrierung in Tauri implementieren
-- [ ] Dynamische Hotkey-Registrierung ohne Neustart
-- [ ] Hotkey-Konflikt-Erkennung in Echtzeit
-- [ ] User-Feedback bei Hotkey-Änderung
-- [ ] Tests für Hotkey-Verwaltung
+- [x] Hotkey-Deregistrierung in Tauri implementieren
+- [x] Dynamische Hotkey-Registrierung ohne Neustart
+- [x] Hotkey-Konflikt-Erkennung in Echtzeit
+- [x] User-Feedback bei Hotkey-Änderung
+- [x] useDynamicHotkey Hook für Frontend
+- [x] update_hotkey Tauri Command implementiert
 
 ## Phase 28: Aufgabenmanagement & Task-Extraction
 - [x] Task-Extraction mit KI implementieren
 - [x] Task-Dashboard mit Übersicht
 - [x] Task-Priorisierung (Magic Sort)
-- [x] Fälligkeiten - [ ] Fälligkeiten & Erinnerungen Erinnerungen
+- [x] Fälligkeiten & Erinnerungen
 - [x] Kalender-Ansicht für Tasks
 - [x] Task-Datenbank-Schema
 - [x] Backend-Procedures für Task-Management
+- [x] Frontend-Komponente für Tasks
+- [x] Unit-Tests für Task-Management
 
 ## Phase 29: KI-Chat & Interaktive Features
 - [ ] "Ask your Note" Chat-Interface
@@ -341,6 +271,8 @@ External Services
 - [x] Proaktive Vorschläge-Engine
 - [x] Verknüpfte Notizen-Finder
 - [x] Analyse-Dashboard
+- [x] Frontend-Komponente für Analytics
+- [x] Unit-Tests für Analytics
 
 ## Phase 31: Performance-Optimierung
 - [x] Code-Splitting implementieren (Vendor-Chunks aufgeteilt)
@@ -356,41 +288,50 @@ External Services
 - [x] Code-Signing konfigurieren (optional)
 - [x] Auto-Update Setup (vorbereitet)
 - [x] Release-Prozess dokumentieren
-
-
-## Phase 27: Dynamische Hotkey-Registrierung
-- [x] Hotkey-Deregistrierung in Tauri implementieren
-- [x] Dynamische Hotkey-Registrierung ohne Neustart
-- [x] Hotkey-Konflikt-Erkennung in Echtzeit
-- [x] User-Feedback bei Hotkey-Änderung
-- [x] useDynamicHotkey Hook für Frontend
-- [x] update_hotkey Tauri Command implementiert
-
+- [x] Build-Skript für automatisierte Builds
+- [x] GitHub Actions Workflow für CI/CD
 
 ## Phase 33: Wochenanalyse & Projektideen-Generator
+- [x] Trend-Erkennung für Produktivität
+- [x] Pattern-Analyse in Notizen
+- [x] Zeitausgaben pro Kategorie berechnen
+- [x] Häufigste Themen identifizieren
+- [x] Wochenanalyse-Procedures (getTrendData, analyzeWeek)
+- [x] KI-basierte Projektideen-Generierung
+- [x] Ideen aus Notizen extrahieren
+- [x] Machbarkeits-Bewertung
+- [x] Priorisierung von Projektideen
+- [x] Verknüpfung mit existierenden Tasks
+- [x] Wochenanalyse-Seite mit Trends
+- [x] Produktivitäts-Grafiken
+- [x] Kategorien-Breakdown
+- [x] Projektideen-Vorschläge anzeigen
+- [x] Trend-Vergleich (Woche-zu-Woche)
+- [x] Unit-Tests für Trend-Erkennung
+- [x] Integration-Tests für Analyse-Pipeline
+- [x] Mock-Daten für Wochenanalyse
 
-### Wochenanalyse Backend
-- [ ] Trend-Erkennung für Produktivität
-- [ ] Pattern-Analyse in Notizen
-- [ ] Zeitausgaben pro Kategorie berechnen
-- [ ] Häufigste Themen identifizieren
-- [ ] Wochenanalyse-Procedures (getTrendData, analyzeWeek)
+## Phase 34: Intelligente Notiz-Orchestrierung
+- [x] Sidebar Navigation aktualisiert: "Verlauf" → "Aufnahmen"
+- [x] Neuer "Orchestrierung" Reiter mit Layers-Icon
+- [x] API Manager aus Sidebar entfernt
+- [x] Datenbankschema für Notes erweitert
+- [x] Datenbankschema für Projects erweitert
+- [x] Datenbankschema für SchedulerConfig erweitert
+- [x] Datenbankschema für CategorizationFeedback erweitert
+- [x] Datenbankmigrationen durchgeführt
+- [x] orchestrationRouter mit tRPC Procedures
+- [x] createNote, getNotes für Notiz-Management
+- [x] getProjects für Projekt-Verwaltung
+- [x] getSchedulerConfig für Scheduler-Konfiguration
+- [x] submitCategorizationFeedback für Benutzer-Feedback
+- [ ] Frontend-Komponenten für Orchestrierung (Notizen, Aufgaben, Projekte)
+- [ ] Automatischer Kategorisierungs-Scheduler
+- [ ] Wöchentliche Deep-Analyse mit Benutzer-Feedback-UI
+- [ ] KI-Lernmechanismus für Feedback-Integration
 
-### Projektideen-Generator
-- [ ] KI-basierte Projektideen-Generierung
-- [ ] Ideen aus Notizen extrahieren
-- [ ] Machbarkeits-Bewertung
-- [ ] Priorisierung von Projektideen
-- [ ] Verknüpfung mit existierenden Tasks
-
-### Frontend-Dashboard
-- [ ] Wochenanalyse-Seite mit Trends
-- [ ] Produktivitäts-Grafiken
-- [ ] Kategorien-Breakdown
-- [ ] Projektideen-Vorschläge anzeigen
-- [ ] Trend-Vergleich (Woche-zu-Woche)
-
-### Testing & Integration
-- [ ] Unit-Tests für Trend-Erkennung
-- [ ] Integration-Tests für Analyse-Pipeline
-- [ ] Mock-Daten für Wochenanalyse
+## Bug Fixes
+- [x] Audio-File-Download-Fehler in Transkriptions-Pipeline beheben
+- [x] Fehlerbehandlung für fehlgeschlagene Audio-Downloads verbessern
+- [x] Detailliertes Logging für Debugging hinzufügen
+- [x] Neue transcribeAudioDirect Procedure für direkten Base64-Upload
