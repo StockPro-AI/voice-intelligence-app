@@ -1,9 +1,8 @@
 import { router, protectedProcedure } from "../_core/trpc";
 import { z } from "zod";
 import { getDb } from "../db";
-import { notes, projects, schedulerConfig, categorizationFeedback, tasks } from "../../drizzle/schema";
-import { eq, and } from "drizzle-orm";
-import { invokeLLM } from "../_core/llm";
+import { notes, projects, schedulerConfig, categorizationFeedback } from "../../drizzle/schema";
+import { eq } from "drizzle-orm";
 import { TRPCError } from "@trpc/server";
 
 export const orchestrationRouter = router({
@@ -31,7 +30,7 @@ export const orchestrationRouter = router({
             category: "raw",
             status: "unprocessed",
           })
-          .returning();
+          .$returningId();
 
         return { success: true, note };
       } catch (error) {
@@ -45,7 +44,6 @@ export const orchestrationRouter = router({
   getNotes: protectedProcedure
     .input(
       z.object({
-        status: z.enum(["unprocessed", "processing", "processed", "review"]).optional(),
         limit: z.number().default(50),
         offset: z.number().default(0),
       })
@@ -55,17 +53,10 @@ export const orchestrationRouter = router({
         const db = await getDb();
         if (!db) throw new Error("Database not available");
         
-        let query = db
+        const allNotes = await db
           .select()
           .from(notes)
-          .where(eq(notes.userId, ctx.user.id));
-
-        if (input.status) {
-          query = query.where(eq(notes.status, input.status));
-        }
-
-        const allNotes = await query
-          .orderBy(notes.createdAt)
+          .where(eq(notes.userId, ctx.user.id))
           .limit(input.limit)
           .offset(input.offset);
 
@@ -82,7 +73,6 @@ export const orchestrationRouter = router({
   getProjects: protectedProcedure
     .input(
       z.object({
-        status: z.enum(["idea", "planning", "active", "paused", "completed"]).optional(),
         limit: z.number().default(50),
         offset: z.number().default(0),
       })
@@ -92,17 +82,10 @@ export const orchestrationRouter = router({
         const db = await getDb();
         if (!db) throw new Error("Database not available");
         
-        let query = db
+        const allProjects = await db
           .select()
           .from(projects)
-          .where(eq(projects.userId, ctx.user.id));
-
-        if (input.status) {
-          query = query.where(eq(projects.status, input.status));
-        }
-
-        const allProjects = await query
-          .orderBy(projects.createdAt)
+          .where(eq(projects.userId, ctx.user.id))
           .limit(input.limit)
           .offset(input.offset);
 
@@ -133,7 +116,7 @@ export const orchestrationRouter = router({
           .values({
             userId: ctx.user.id,
           })
-          .returning();
+          .$returningId();
 
         return { success: true, config: newConfig };
       }
@@ -173,7 +156,7 @@ export const orchestrationRouter = router({
             userFeedback: input.userFeedback,
             userCorrection: input.userCorrection,
           })
-          .returning();
+          .$returningId();
 
         return { success: true, feedback };
       } catch (error) {
