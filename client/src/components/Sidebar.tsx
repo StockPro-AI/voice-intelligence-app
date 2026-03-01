@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ChevronLeft, ChevronRight, Home, History, Settings, Zap, Menu, X, TrendingUp } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Home, History, Settings, Zap, Menu, X, TrendingUp, Layers } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'wouter';
@@ -39,16 +39,16 @@ export function Sidebar({ isOpen: initialOpen = true, onToggle }: SidebarProps) 
       active: location === '/',
     },
     {
-      href: '/history',
-      label: t('history.title'),
+      href: '/recordings',
+      label: t('recordings.title', 'Aufnahmen'),
       icon: History,
-      active: location === '/history',
+      active: location === '/recordings',
     },
     {
-      href: '/api-manager',
-      label: 'API Manager',
-      icon: Zap,
-      active: location === '/api-manager',
+      href: '/orchestration',
+      label: 'Orchestrierung',
+      icon: Layers,
+      active: location === '/orchestration',
     },
     {
       href: '/analytics',

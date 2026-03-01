@@ -36,6 +36,13 @@
       "when": 1771096550384,
       "tag": "0004_chilly_rockslide",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1772334402341,
+      "tag": "0005_chunky_ogun",
+      "breakpoints": true
     }
   ]
 }
