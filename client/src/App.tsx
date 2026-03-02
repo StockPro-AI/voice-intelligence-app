@@ -14,6 +14,7 @@ import { Sidebar } from "./components/Sidebar";
 import { OfflineIndicator } from "./components/OfflineIndicator";
 import { OfflineSync } from "./components/OfflineSync";
 import { Analytics } from "./pages/Analytics";
+import { Orchestration } from "./pages/Orchestration";
 
 function Router() {
   return (
@@ -26,6 +27,7 @@ function Router() {
           <Route path="/history" component={History} />
           <Route path="/api-manager" component={APIManagerPage} />
           <Route path="/analytics" component={Analytics} />
+          <Route path="/orchestration" component={Orchestration} />
           <Route path="/404" component={NotFound} />
           <Route component={NotFound} />
         </Switch>

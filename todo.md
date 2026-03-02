@@ -325,7 +325,12 @@
 - [x] getProjects für Projekt-Verwaltung
 - [x] getSchedulerConfig für Scheduler-Konfiguration
 - [x] submitCategorizationFeedback für Benutzer-Feedback
-- [ ] Frontend-Komponenten für Orchestrierung (Notizen, Aufgaben, Projekte)
+- [x] Frontend-Komponenten für Orchestrierung (Notizen, Aufgaben, Projekte) (Notizen, Aufgaben, Projekte)
+- [x] Orchestration.tsx mit Tab-Navigation
+- [x] Notizen-Tab mit strukturierter Anzeige
+- [x] Aufgaben-Tab mit Status-Filterung
+- [x] Projekte-Tab mit Kanban-Board Vorbereitung
+- [x] Unit-Tests für Orchestration-Komponente
 - [ ] Automatischer Kategorisierungs-Scheduler
 - [ ] Wöchentliche Deep-Analyse mit Benutzer-Feedback-UI
 - [ ] KI-Lernmechanismus für Feedback-Integration
