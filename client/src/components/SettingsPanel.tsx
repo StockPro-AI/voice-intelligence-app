@@ -11,6 +11,7 @@ import { toast } from 'sonner';
 import { useTranslation } from 'react-i18next';
 import { useTheme } from '@/contexts/ThemeContext';
 import { LanguageSwitcher } from './LanguageSwitcher';
+import { TTSSettings } from './TTSSettings';
 
 interface SettingsPanelProps {
   onClose?: () => void;
@@ -328,6 +329,9 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
           <LanguageSwitcher />
         </div>
       </Card>
+
+      {/* Text-to-Speech Section */}
+      <TTSSettings />
 
       {/* Theme Section */}
       <Card className="p-6 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700">

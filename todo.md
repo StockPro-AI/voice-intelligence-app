@@ -366,4 +366,8 @@
 - [x] Fehlerbehandlung für TTS-Fehler (Error Handler in Service)
 - [x] useTTS Hook für React Integration
 - [x] updateTTSConfig Procedure in Settings Router
-- [x] Dokumentation für TTS-Feature
+- [x] TTSSettings in SettingsPanel integriert
+- [x] Styling mit Dark Mode Support (Cyan/Blue Theme)
+- [x] Test Voice Button für Vorschau
+- [x] Save Settings mit Gradient Button
+- [x] Responsive Design und Accessibility
