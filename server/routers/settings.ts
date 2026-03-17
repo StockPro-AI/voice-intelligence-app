@@ -150,4 +150,41 @@ export const settingsRouter = router({
       })),
     };
   }),
+
+  updateTTSConfig: protectedProcedure
+    .input(
+      z.object({
+        ttsEnabled: z.boolean().optional(),
+        ttsVoiceIndex: z.number().min(0).optional(),
+        ttsRate: z.number().min(0.1).max(10).optional(),
+        ttsPitch: z.number().min(0).max(2).optional(),
+        ttsVolume: z.number().min(0).max(1).optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        const updated = await updateUserSettings(ctx.user.id, {
+          ttsEnabled: input.ttsEnabled,
+          ttsVoiceIndex: input.ttsVoiceIndex,
+          ttsRate: input.ttsRate?.toString(),
+          ttsPitch: input.ttsPitch?.toString(),
+          ttsVolume: input.ttsVolume?.toString(),
+        });
+
+        return {
+          success: true,
+          config: {
+            ttsEnabled: updated?.ttsEnabled ?? true,
+            ttsVoiceIndex: updated?.ttsVoiceIndex ?? 0,
+            ttsRate: parseFloat(updated?.ttsRate as string) ?? 1,
+            ttsPitch: parseFloat(updated?.ttsPitch as string) ?? 1,
+            ttsVolume: parseFloat(updated?.ttsVolume as string) ?? 1,
+          },
+          message: 'TTS configuration updated successfully.',
+        };
+      } catch (error) {
+        const message = error instanceof Error ? error.message : 'Failed to update TTS config';
+        throw new Error(`TTS config update error: ${message}`);
+      }
+    }),
 });

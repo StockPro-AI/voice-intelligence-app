@@ -354,3 +354,16 @@
 - [ ] Chat-History Management (Abruf, Löschen)
 - [ ] Unit-Tests für Chat-Router
 - [ ] Integration in Orchestration Page
+
+## Phase 35: Text-to-Speech (TTS) Integration
+- [x] Web Speech API Integration für TTS (ttsService.ts)
+- [x] TTS-Service mit Stimmen-Management (getTTSService Singleton)
+- [x] TTS-Konfiguration in Datenbank speichern (userSettings Schema erweitert)
+- [x] Stimmen-Auswahl UI in Settings (TTSSettings Komponente)
+- [x] ChatInterface mit Play/Pause/Stop Buttons erweitern
+- [x] Audio-Playback-Kontrollen implementieren (speak, pause, resume, stop)
+- [x] TTS-Geschwindigkeit und Lautstärke konfigurierbar (Rate, Pitch, Volume Slider)
+- [x] Fehlerbehandlung für TTS-Fehler (Error Handler in Service)
+- [x] useTTS Hook für React Integration
+- [x] updateTTSConfig Procedure in Settings Router
+- [x] Dokumentation für TTS-Feature

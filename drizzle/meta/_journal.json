@@ -43,6 +43,13 @@
       "when": 1772334402341,
       "tag": "0005_chunky_ogun",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1773782017218,
+      "tag": "0006_glorious_xavin",
+      "breakpoints": true
     }
   ]
 }

@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card } from "@/components/ui/card";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Loader2, Send, Trash2 } from "lucide-react";
+import { Loader2, Send, Trash2, Volume2, Pause, Play } from "lucide-react";
 import { Streamdown } from "streamdown";
+import { useTTS } from "@/hooks/useTTS";
 
 
 interface ChatMessage {
@@ -24,7 +25,9 @@ export function ChatInterface({ noteId, noteName }: ChatInterfaceProps) {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [playingMessageId, setPlayingMessageId] = useState<number | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
+  const { speak, pause, resume, stop, isPlaying, isPaused } = useTTS();
 
   // Fetch chat history
   const { data: chatHistory, isLoading: isLoadingHistory } =
@@ -106,6 +109,25 @@ export function ChatInterface({ noteId, noteName }: ChatInterfaceProps) {
     }
   };
 
+  const handleSpeak = (messageId: number, text: string) => {
+    if (isPlaying && playingMessageId === messageId) {
+      if (isPaused) {
+        resume();
+      } else {
+        pause();
+      }
+    } else {
+      stop();
+      setPlayingMessageId(messageId);
+      speak(text);
+    }
+  };
+
+  const handleStop = () => {
+    stop();
+    setPlayingMessageId(null);
+  };
+
   return (
     <div className="flex flex-col h-full gap-4 p-4">
       {/* Header */}
@@ -146,8 +168,26 @@ export function ChatInterface({ noteId, noteName }: ChatInterfaceProps) {
                 key={idx}
                 className={`flex ${
                   msg.role === "user" ? "justify-end" : "justify-start"
-                }`}
+                } gap-2`}
               >
+                {msg.role === "assistant" && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => handleSpeak(idx, msg.message)}
+                    className="self-end mb-2"
+                  >
+                    {isPlaying && playingMessageId === idx ? (
+                      isPaused ? (
+                        <Play className="w-4 h-4" />
+                      ) : (
+                        <Pause className="w-4 h-4" />
+                      )
+                    ) : (
+                      <Volume2 className="w-4 h-4" />
+                    )}
+                  </Button>
+                )}
                 <Card
                   className={`max-w-xs lg:max-w-md px-4 py-2 ${
                     msg.role === "user"
@@ -182,6 +222,16 @@ export function ChatInterface({ noteId, noteName }: ChatInterfaceProps) {
           disabled={isLoading || isLoadingHistory}
           className="flex-1"
         />
+        {isPlaying && (
+          <Button
+            type="button"
+            variant="outline"
+            size="icon"
+            onClick={handleStop}
+          >
+            <Pause className="w-4 h-4" />
+          </Button>
+        )}
         <Button
           type="submit"
           disabled={isLoading || !input.trim()}

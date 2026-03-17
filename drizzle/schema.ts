@@ -51,6 +51,12 @@ export const userSettings = mysqlTable("user_settings", {
   enrichmentMode: mysqlEnum("enrichmentMode", ["summary", "structure", "format", "context"]).default("summary").notNull(),
   autoEnrich: boolean("autoEnrich").default(false).notNull(),
   darkMode: boolean("darkMode").default(true).notNull(),
+  // TTS Configuration
+  ttsEnabled: boolean("ttsEnabled").default(true).notNull(),
+  ttsVoiceIndex: int("ttsVoiceIndex").default(0).notNull(),
+  ttsRate: decimal("ttsRate", { precision: 3, scale: 2 }).default("1").notNull(),
+  ttsPitch: decimal("ttsPitch", { precision: 3, scale: 2 }).default("1").notNull(),
+  ttsVolume: decimal("ttsVolume", { precision: 3, scale: 2 }).default("1").notNull(),
   createdAt: timestamp("createdAt").defaultNow().notNull(),
   updatedAt: timestamp("updatedAt").defaultNow().onUpdateNow().notNull(),
 });
