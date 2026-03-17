@@ -259,10 +259,13 @@
 - [x] Unit-Tests für Task-Management
 
 ## Phase 29: KI-Chat & Interaktive Features
-- [ ] "Ask your Note" Chat-Interface
+- [x] "Ask your Note" Chat-Interface (Backend & Frontend implementiert)
+- [x] Chat-History speichern (chatHistory Tabelle & Procedures)
+- [x] Chat Router mit sendMessage, getChatHistory, deleteChatHistory
+- [x] ChatInterface Frontend-Komponente mit Message-Display
+- [x] 7 Unit-Tests für Chat Router (alle bestanden)
 - [ ] Text-to-Speech (TTS) Integration
 - [ ] Rich-Text-Editor mit Toolbar
-- [ ] Chat-History speichern
 - [ ] TTS-Stimmen-Optionen
 
 ## Phase 30: Strategische Analyse Features
@@ -340,3 +343,14 @@
 - [x] Fehlerbehandlung für fehlgeschlagene Audio-Downloads verbessern
 - [x] Detailliertes Logging für Debugging hinzufügen
 - [x] Neue transcribeAudioDirect Procedure für direkten Base64-Upload
+
+
+## Phase 35: "Ask your Note" Chat-Interface
+- [ ] Chat-Backend mit Note-Context und LLM Integration
+- [ ] Chat-History Datenbankschema
+- [ ] Chat-Frontend Komponente mit Message UI
+- [ ] Markdown-Rendering für Chat-Responses
+- [ ] Streaming Support für lange Responses
+- [ ] Chat-History Management (Abruf, Löschen)
+- [ ] Unit-Tests für Chat-Router
+- [ ] Integration in Orchestration Page
